@@ -19,7 +19,7 @@ const KeyPair InputState::state(INPUT_ID id) const
 	if (id < static_cast<INPUT_ID>(0) ||
 		_state.find(id) == _state.end())
 	{
-		return;
+		return {-1, -1};
 	}
-	return;
+	return _state.at(id);
 }
