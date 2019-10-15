@@ -26,6 +26,7 @@ class Enemy :
 public:
 	Enemy();
 	Enemy(EnemyState&);
+	void Update(void) override;
 	~Enemy();
 private:
 	void init(void);		// ‰Šú‰»

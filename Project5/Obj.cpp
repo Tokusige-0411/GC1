@@ -5,6 +5,8 @@
 
 Obj::Obj()
 {
+	_alive = true;
+	_dead = false;
 	_animFrame = 0;
 	_animCount = 0;
 }
@@ -82,6 +84,19 @@ bool Obj::isAnimEnd(void)
 	{
 		return false;
 	}
+}
+
+bool Obj::DestroyPrpc(void)
+{
+	if (_alive)
+	{
+		return false;
+	}
+	if (isAnimEnd())
+	{
+		_dead = true;
+	}
+	return true;
 }
 
 void Obj::Update(void)

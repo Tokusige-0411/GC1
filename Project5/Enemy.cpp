@@ -1,4 +1,5 @@
 #include <imageMng.h>
+#include <Scene\GameScene.h>
 #include "Enemy.h"
 
 Enemy::Enemy()
@@ -12,6 +13,18 @@ Enemy::Enemy(EnemyState & enstate)
 	_size = std::get<static_cast<int>(ENEMY_STATE::SIZE)>(enstate);
 	_type = std::get<static_cast<int>(ENEMY_STATE::TYPE)>(enstate);
 	init();
+}
+
+void Enemy::Update(void)
+{
+	if (DestroyPrpc())
+	{
+		return;
+	}
+	if (rand() % 300 == 0)
+	{
+		SetAlive(false);
+	}
 }
 
 

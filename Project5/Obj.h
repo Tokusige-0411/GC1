@@ -24,7 +24,7 @@ class Obj
 public:
 	// -----------ŠÖ”
 	Obj();
-	void Update(void);
+	virtual void Update(void) = 0;
 	void Draw(void);							// ·­°‚ğ’Ç‰Á‚·‚é
 	void Draw(int id);							// ID‚ğ“Š‚°‚Ä·­°‚ğ’Ç‰Á
 	virtual ~Obj();
@@ -37,6 +37,7 @@ public:
 	bool isAlive(void) { return _alive; }					// ¶‘¶Ì×¸Ş‚ğ•Ô‚·
 	bool isDead(void) { return _dead; }						// €–SÌ×¸Ş‚ğ•Ô‚·
 	bool isAnimEnd(void);
+
 private:
 	std::map<STATE, AnimVector> _animMap;			// ±ÆÒ°¼®İî•ñ‚ğ•Û‘¶‚·‚éÏ¯Ìß
 	STATE _state;									// ¡‚Ìó‘Ô
@@ -44,6 +45,7 @@ private:
 	unsigned int _animCount;						// ·°‚Ì’†‚Ìo‚¾‚µ‚©‚ç‰½‰ñÙ°Ìß‚µ‚Ä‚¢‚é‚©
 
 protected:
+	bool DestroyPrpc(void);			// “–‚½‚è”»’è‚È‚Ç‚Ég‚¤
 	bool _alive;					// ¶‘¶Ì×¸Ş
 	bool _dead;						// €–SÌ×¸Ş
 	Vector2 _pos;					// •`‰æˆÊ’u

@@ -70,11 +70,11 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <IncludePath>$(DxLib);$(SolutionDir);$(SolutionDir)\_debug;$(SolutionDir)\common;$(IncludePath)</IncludePath>
+    <IncludePath>$(DxLib);$(SolutionDir);$(SolutionDir)\_debug;$(SolutionDir)\common;$(SolutionDir)\Input;$(IncludePath)</IncludePath>
     <LibraryPath>$(Dxlib);$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-    <IncludePath>$(DxLib);$(SolutionDir);$(SolutionDir)\_debug;$(SolutionDir)\common;$(IncludePath)</IncludePath>
+    <IncludePath>$(DxLib);$(SolutionDir);$(SolutionDir)\_debug;$(SolutionDir)\common;$(SolutionDir)\Input;$(IncludePath)</IncludePath>
     <LibraryPath>$(Dxlib);$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
@@ -126,6 +126,8 @@
   <ItemGroup>
     <ClCompile Include="common\imageMng.cpp" />
     <ClCompile Include="Enemy.cpp" />
+    <ClCompile Include="Input\inputState.cpp" />
+    <ClCompile Include="Input\KeyState.cpp" />
     <ClCompile Include="Obj.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="Scene\GameScene.cpp" />
@@ -139,6 +141,8 @@
   <ItemGroup>
     <ClInclude Include="common\imageMng.h" />
     <ClInclude Include="Enemy.h" />
+    <ClInclude Include="Input\inputState.h" />
+    <ClInclude Include="Input\KeyState.h" />
     <ClInclude Include="Obj.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="Scene\GameScene.h" />
