@@ -1,6 +1,7 @@
 #pragma once
 #ifdef _DEBUG
 
+#include <windows.h>
 #include <memory>
 
 // ÃÞÊÞ¯¸ÞÒ¯¾°¼Þ—p’è‹`
