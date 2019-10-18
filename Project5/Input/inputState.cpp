@@ -3,6 +3,11 @@
 
 InputState::InputState()
 {
+	// ·°‚Ì‰Šú‰»
+	for (auto id : INPUT_ID())
+	{
+		_state.try_emplace(id, KeyPair{ 0, 1 });
+	}
 }
 
 
@@ -43,4 +48,21 @@ bool InputState::state(INPUT_ID id, int data)
 		return true;
 	}
 	return false;
+}
+
+void InputState::SetOld(void)
+{
+	for (auto key : INPUT_ID())
+	{
+		try
+		{
+			// µ°ÙÄŞ(¾¶İÄŞ)‚É¡‚Ì·°ó‘Ô‚ğ“ü‚ê‚é
+			_state[key].second = _state[key].first;
+		}
+		catch (...)
+		{
+			AST();
+			_state.emplace(key, KeyPair{ 0, 0 });
+		}
+	}
 }

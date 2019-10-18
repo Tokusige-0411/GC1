@@ -18,6 +18,7 @@ enum class ENEMY_STATE
 	MAX
 };
 
+// <“G‚ÌŽí—Þ, À•W, ‰æ‘œ‚Ì»²½Þ>
 using EnemyState = std::tuple<ENEMY_TYPE, Vector2, Vector2>;
 
 class Enemy :
