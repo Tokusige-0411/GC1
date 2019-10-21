@@ -10,7 +10,6 @@ InputState::InputState()
 	}
 }
 
-
 InputState::~InputState()
 {
 }
@@ -31,17 +30,18 @@ const KeyPair & InputState::state(INPUT_ID id) const
 	}
 	catch (...)
 	{
-		AST();
 		// 参照で返すのでﾛｰｶﾙで作ったら抜けたら消えてしまう
 		// ↓参照で返さないのであれば下でもいい
 		// return { 0, 0 };
 		// ﾒﾓﾘのｺｽﾄをとるか、処理の単純さをとるか
+		AST();
 		return defData;
 	}
 }
 
 bool InputState::state(INPUT_ID id, int data)
 {
+	// 値があることを前提で考えない
 	if (_state.find(id) != _state.end())
 	{
 		_state[id].first = data;
@@ -52,6 +52,7 @@ bool InputState::state(INPUT_ID id, int data)
 
 void InputState::SetOld(void)
 {
+	// 範囲for文の中なので範囲外のﾁｪｯｸはしなくてもいい
 	for (auto key : INPUT_ID())
 	{
 		try
@@ -61,8 +62,9 @@ void InputState::SetOld(void)
 		}
 		catch (...)
 		{
+			// ｴﾗｰが出た場合
 			AST();
-			_state.emplace(key, KeyPair{ 0, 0 });
+			_state.emplace(key, KeyPair{ 0, 1 });
 		}
 	}
 }
