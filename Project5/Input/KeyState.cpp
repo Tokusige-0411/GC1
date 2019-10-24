@@ -18,7 +18,7 @@ KeyState::KeyState()
 	_keyConDef.emplace_back(KEY_INPUT_A);			// BTN3
 	_keyConDef.emplace_back(KEY_INPUT_S);			// BTN4
 
-	_keyCon = _keyConDef;
+	_keyCon = _keyConDef;			// ÃŞ°À‚ğ•Û‘¶
 
 	// ÒİÊŞ°ŠÖ”‚ÌÎß²İÀ‚ÍµÌ¾¯Ä‚É‚È‚Á‚Ä‚¢‚é
 	// µÌ¾¯Ä‚È‚Ì‚Åe‚Ì±ÄŞÚ½‚ª‚í‚©‚ç‚È‚¢
