@@ -1,5 +1,7 @@
 #pragma once
+#include <memory>
 #include "Obj.h"
+#include <inputState.h>
 
 class Player :
 	public Obj
@@ -10,6 +12,7 @@ public:
 	void Update(void) override;
 	~Player();
 private:
-	void init(void);		// ‰Šú‰»
+	void init(void);						// ‰Šú‰»
+	std::unique_ptr<InputState> _input;		// InputState‚ğÕÆ°¸Îß²İÀ‚ÅéŒ¾
 };
 

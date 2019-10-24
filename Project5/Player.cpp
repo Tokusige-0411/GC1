@@ -1,6 +1,7 @@
 #include <DxLib.h>
 #include <imageMng.h>
 #include "Player.h"
+#include <KeyState.h>
 
 Player::Player()
 {
@@ -20,6 +21,9 @@ void Player::Update(void)
 	{
 		return;
 	}
+
+	// ·°ºİÌ¨¸Ş‚Ì±¯ÌßÃŞ°Ä‚ğŒÄ‚Ño‚·
+	(*_input).Update();
 
 	// ˆÚ“®ˆ—
 	// if•¶1ŒÂ
@@ -59,5 +63,13 @@ void Player::init(void)
 	data.emplace_back(-1, 45);
 	SetAnim(STATE::DETH, data);
 
+	// _input(“n‚µ‚½‚¢‚à‚Ì)
+	// _input.’‡‰îl(“n‚µ‚½‚¢‚à‚Ì)
+
+	// _input‚ÉKeyState‚ğÕÆ°¸Îß²İÀ‚Åì‚é
+	// _input.reset(new KeyState());
+	_input = std::make_unique<KeyState>();
+
+	// ÌßÚ²Ô°‚Ìî•ñ‚ğNORMAL‚Éİ’è
 	state(STATE::NORMAL);
 }

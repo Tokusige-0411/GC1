@@ -40,8 +40,24 @@ void KeyState::Update(void)
 
 void KeyState::RefKeyData(void)
 {
+	// _buf‚ÌINPUT_ID‚Ìî•ñ‚ğ_state‚É‘‚«‚Ş
+	for (auto id : INPUT_ID())
+	{
+		state(id, _buf[_keyCon[static_cast<int>(id)]]);
+	}
+	// F1·°‚ÅSetKeyConfig‚ÉØ‚è‘Ö‚¦
+	if ()
+	{
+		func = &KeyState::SetKeyConfig;
+	}
 }
 
 void KeyState::SetKeyConfig(void)
 {
+	// F1·°‚ÅRefKeyData‚ÉØ‚è‘Ö‚¦
+	if ()
+	{
+		func = &KeyState::RefKeyData;
+	}
+	// ÄÚ°½‚Å•\¦
 }
