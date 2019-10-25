@@ -21,6 +21,8 @@ KeyState::KeyState()
 
 	_keyCon = _keyConDef;			// ÃŞ°À‚ğ•Û‘¶
 	modeKeyOld = 1;
+	id = INPUT_ID::LEFT;
+	idOld = INPUT_ID::LEFT;
 
 	// ÒİÊŞ°ŠÖ”‚ÌÎß²İÀ‚ÍµÌ¾¯Ä‚É‚È‚Á‚Ä‚¢‚é
 	// µÌ¾¯Ä‚È‚Ì‚Åe‚Ì±ÄŞÚ½‚ª‚í‚©‚ç‚È‚¢
@@ -75,12 +77,32 @@ void KeyState::SetKeyConfig(void)
 	// “¯‚¶·°ÀŞÒ
 
 	// ‰Ÿ‚³‚ê‚Ä‚¢‚é·°‚ğŒ©‚Â‚¯‚é
-	for (auto key : _buf)
+	int flag = true;
+	for (int i = 0; i < 256; i++)
 	{
-		if (key)
+		if (_buf[i])
 		{
 			// ·°‚Ìİ’è
-			_keyCon[static_cast<int>(id)] = key;
+			for (INPUT_ID findKey = INPUT_ID::LEFT; findKey <= id; ++findKey)
+			{
+				if (_keyCon[static_cast<int>(findKey)] == i)
+				{
+					flag = false;
+				}
+			}
+			if (flag)
+			{
+				_keyCon[static_cast<int>(id)] = i;
+				++id;
+				TRACE("%d\n", id);
+			}
+			if (id >= INPUT_ID::MAX)
+			{
+				id = INPUT_ID::LEFT;
+				func = &KeyState::RefKeyData;
+				TRACE("RefKeyData\n")
+			}
+			break;
 		}
 	}
 }
