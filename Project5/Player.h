@@ -13,6 +13,6 @@ public:
 	~Player();
 private:
 	void init(void);						// ‰Šú‰»
-	std::unique_ptr<InputState> _input;		// InputState‚ğÕÆ°¸Îß²İÀ‚ÅéŒ¾
+	std::shared_ptr<InputState> _input;		// InputState‚ğÕÆ°¸Îß²İÀ‚ÅéŒ¾
 };
 

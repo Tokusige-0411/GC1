@@ -27,16 +27,20 @@ void Player::Update(void)
 
 	// ˆÚ“®ˆ—
 	// if•¶1ŒÂ
-	//auto move = [](const int keyID, int& pNum, const int speed) {
-	//	if (CheckHitKey(keyID))
-	//	{
-	//		pNum += speed;
-	//	}
-	//};
-	//move(KEY_INPUT_LEFT,	_pos.x,		-2);
-	//move(KEY_INPUT_RIGHT,	_pos.x,		 2);
-	//move(KEY_INPUT_UP,	_pos.y,		-2);
-	//move(KEY_INPUT_DOWN,	_pos.y,		 2);
+	auto move = [](std::weak_ptr<InputState> keyData, const INPUT_ID id, int& pNum, const int speed) {
+		if (!keyData.expired())
+		{
+			if ((*keyData.lock()).state(id).first)
+			{
+				pNum += speed;
+			}
+		}
+	};
+
+	move(_input, INPUT_ID::LEFT,	_pos.x,		-2);
+	move(_input, INPUT_ID::RIGHT,	_pos.x,		 2);
+	move(_input, INPUT_ID::UP,		_pos.y,		-2);
+	move(_input, INPUT_ID::DOWN,	_pos.y,		 2);
 }
 
 Player::~Player()
@@ -68,7 +72,7 @@ void Player::init(void)
 
 	// _input‚ÉKeyState‚ğÕÆ°¸Îß²İÀ‚Åì‚é
 	// _input.reset(new KeyState());
-	_input = std::make_unique<KeyState>();
+	_input = std::make_shared<KeyState>();
 
 	// ÌßÚ²Ô°‚Ìî•ñ‚ğNORMAL‚Éİ’è
 	state(STATE::NORMAL);

@@ -1,4 +1,5 @@
 #include <DxLib.h>
+#include <_DebugConout.h>
 #include "KeyState.h"
 
 KeyState::KeyState()
@@ -19,6 +20,7 @@ KeyState::KeyState()
 	_keyConDef.emplace_back(KEY_INPUT_S);			// BTN4
 
 	_keyCon = _keyConDef;			// ﾃﾞｰﾀを保存
+	modeKeyOld = 1;
 
 	// ﾒﾝﾊﾞｰ関数のﾎﾟｲﾝﾀはｵﾌｾｯﾄになっている
 	// ｵﾌｾｯﾄなので親のｱﾄﾞﾚｽがわからない
@@ -33,6 +35,7 @@ KeyState::~KeyState()
 void KeyState::Update(void)
 {
 	SetOld();					// ｷｰ情報の更新
+	modeKeyOld = _buf[KEY_INPUT_F1];
 	GetHitKeyStateAll(_buf);	// すべてのｷｰ情報の取得
 	// ﾒﾝﾊﾞｰ関数ﾎﾟｲﾝﾀ
 	(this->*func)();
@@ -46,18 +49,38 @@ void KeyState::RefKeyData(void)
 		state(id, _buf[_keyCon[static_cast<int>(id)]]);
 	}
 	// F1ｷｰでSetKeyConfigに切り替え
-	if ()
+	if (_buf[KEY_INPUT_F1] && !modeKeyOld)
 	{
 		func = &KeyState::SetKeyConfig;
+		// ﾄﾚｰｽで表示
+		TRACE("SetKeyConfig\n")
 	}
+
 }
 
 void KeyState::SetKeyConfig(void)
 {
-	// F1ｷｰでRefKeyDataに切り替え
-	if ()
+
+	 // F1ｷｰでRefKeyDataに切り替え
+	if (_buf[KEY_INPUT_F1] && !modeKeyOld)
 	{
 		func = &KeyState::RefKeyData;
+		// ﾄﾚｰｽで表示
+		TRACE("RefKeyData\n")
 	}
-	// ﾄﾚｰｽで表示
+
+	// ﾎﾞﾀﾝを押したらそのｷｰに設定
+	// 決定したら次のｷｰに変更
+	// 最後まで行ったら自動的に終了
+	// 同じｷｰﾀﾞﾒ
+
+	// 押されているｷｰを見つける
+	for (auto key : _buf)
+	{
+		if (key)
+		{
+			// ｷｰの設定
+			_keyCon[static_cast<int>(id)] = key;
+		}
+	}
 }
