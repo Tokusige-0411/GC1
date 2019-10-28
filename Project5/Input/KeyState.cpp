@@ -26,7 +26,7 @@ KeyState::KeyState()
 	FILE *tmppt;
 	if (fopen_s(&tmppt, "key.dat", "r"))
 	{
-		_keyCon.begin() = tmppt;
+		fread();
 	}
 	else
 	{
