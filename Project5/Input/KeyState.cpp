@@ -26,7 +26,7 @@ KeyState::KeyState()
 	if ((fopen_s(&filePt, "data/key.dat", "r")) == NULL)
 	{
 		_keyCon.resize(static_cast<size_t>(end(INPUT_ID())));
-		fread(_keyCon.data(), sizeof(int), static_cast<size_t>(end(INPUT_ID())), filePt);
+		fread(_keyCon.data(), sizeof(_keyCon[0]), static_cast<size_t>(end(INPUT_ID())), filePt);
 		fclose(filePt);
 	}
 	else
@@ -124,7 +124,7 @@ void KeyState::SetKeyConfig(void)
 			{
 				if ((fopen_s(&filePt, "data/key.dat", "w")) == NULL)
 				{
-					fwrite(_keyCon.data(), sizeof(int), static_cast<size_t>(end(INPUT_ID())), filePt);
+					fwrite(_keyCon.data(), sizeof(_keyCon[0]), static_cast<size_t>(end(INPUT_ID())), filePt);
 					fclose(filePt);
 				}
 				else
