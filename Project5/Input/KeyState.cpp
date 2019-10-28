@@ -19,10 +19,19 @@ KeyState::KeyState()
 	_keyConDef.emplace_back(KEY_INPUT_A);			// BTN3
 	_keyConDef.emplace_back(KEY_INPUT_S);			// BTN4
 
-	_keyCon = _keyConDef;			// ﾃﾞｰﾀを保存
-	modeKeyOld = 1;
-	id = INPUT_ID::LEFT;
-	idOld = INPUT_ID::LEFT;
+	modeKeyOld = 1;					// ｷｰｺﾝﾌｨｸﾞのﾄﾘｶﾞｰ処理
+	_confID = INPUT_ID::LEFT;		// ｷｰｺﾝﾌｨｸﾞ用の変数
+
+	// ﾌｧｲﾙからｷｰ情報の読み込み
+	FILE *tmppt;
+	if (fopen_s(&tmppt, "key.dat", "r"))
+	{
+		_keyCon.begin() = tmppt;
+	}
+	else
+	{
+		_keyCon = _keyConDef;			// ﾃﾞｰﾀを保存
+	}
 
 	// ﾒﾝﾊﾞｰ関数のﾎﾟｲﾝﾀはｵﾌｾｯﾄになっている
 	// ｵﾌｾｯﾄなので親のｱﾄﾞﾚｽがわからない
@@ -55,7 +64,7 @@ void KeyState::RefKeyData(void)
 	{
 		func = &KeyState::SetKeyConfig;
 		// ﾄﾚｰｽで表示
-		TRACE("SetKeyConfig\n")
+		TRACE("ｷｰｺﾝﾌｨｸﾞの開始\n")
 	}
 
 }
@@ -66,9 +75,10 @@ void KeyState::SetKeyConfig(void)
 	 // F1ｷｰでRefKeyDataに切り替え
 	if (_buf[KEY_INPUT_F1] && !modeKeyOld)
 	{
+		_confID = INPUT_ID::MAX;
 		func = &KeyState::RefKeyData;
 		// ﾄﾚｰｽで表示
-		TRACE("RefKeyData\n")
+		TRACE("ｷｰｺﾝﾌｨｸﾞの終了\n")
 	}
 
 	// ﾎﾞﾀﾝを押したらそのｷｰに設定
@@ -76,33 +86,45 @@ void KeyState::SetKeyConfig(void)
 	// 最後まで行ったら自動的に終了
 	// 同じｷｰﾀﾞﾒ
 
-	// 押されているｷｰを見つける
-	int flag = true;
-	for (int i = 0; i < 256; i++)
+	// 初期化
+	for (auto key : INPUT_ID())
 	{
-		if (_buf[i])
+		state(key, 0);
+	}
+
+	// ﾗﾑﾀﾞを使って設定したｷｰの判定
+	auto checkKey = [&](int id) {
+		for (INPUT_ID findKey = INPUT_ID::LEFT; findKey < _confID; ++findKey)
+		{
+			if (_keyCon[static_cast<int>(findKey)] == id)
+			{
+				return false;
+			}
+		}
+		return true;
+	};
+
+	// 押されているｷｰを見つける
+	for (int id = 0; id < sizeof(_buf); id++)
+	{
+		if (!checkKey(id))
+		{
+			continue;
+		}
+		if (_buf[id] && (!_buf[KEY_INPUT_F1]))
 		{
 			// ｷｰの設定
-			for (INPUT_ID findKey = INPUT_ID::LEFT; findKey <= id; ++findKey)
+			_keyCon[static_cast<int>(_confID)] = id;
+			++_confID;
+			TRACE("%d番目のｷｰ設定\n", _confID)
+
+			// 最後のｷｰｺﾝﾌｨｸﾞが終わった
+			if (_confID >= end(_confID))
 			{
-				if (_keyCon[static_cast<int>(findKey)] == i)
-				{
-					flag = false;
-				}
-			}
-			if (flag)
-			{
-				_keyCon[static_cast<int>(id)] = i;
-				++id;
-				TRACE("%d\n", id);
-			}
-			if (id >= INPUT_ID::MAX)
-			{
-				id = INPUT_ID::LEFT;
 				func = &KeyState::RefKeyData;
-				TRACE("RefKeyData\n")
+				TRACE("ｷｰｺﾝﾌｨｸﾞの終了\n")
+				break;
 			}
-			break;
 		}
 	}
 }

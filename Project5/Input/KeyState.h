@@ -18,7 +18,6 @@ private:
 	std::vector<int> _keyCon;			// ·°ºÝÌ¨¸Þ‚ÌÃÞ°À
 	std::vector<int> _keyConDef;		// ÃÞÌ«ÙÄ‚Ì·°ºÝÌ¨¸Þ
 	int modeKeyOld;
-	INPUT_ID id;
-	INPUT_ID idOld;
+	INPUT_ID _confID;
 };
 
