@@ -23,7 +23,7 @@ KeyState::KeyState()
 	_confID = INPUT_ID::LEFT;		// ∑∞∫›Ã®∏ﬁópÇÃïœêî
 
 	// Ãß≤ŸÇ©ÇÁ∑∞èÓïÒÇÃì«Ç›çûÇ›
-	if (fopen_s(&filePt, "key.dat", "r") == 0)
+	if (fopen_s(&filePt, "data/key.dat", "r") == NULL)
 	{
 		_keyCon.resize(static_cast<size_t>(end(INPUT_ID())));
 		fread(_keyCon.data(), sizeof(int), static_cast<size_t>(end(INPUT_ID())), filePt);
@@ -122,7 +122,7 @@ void KeyState::SetKeyConfig(void)
 			// ç≈å„ÇÃ∑∞∫›Ã®∏ﬁÇ™èIÇÌÇ¡ÇΩ
 			if (_confID >= end(_confID))
 			{
-				if (fopen_s(&filePt, "key.dat", "w") == 0)
+				if (fopen_s(&filePt, "data/key.dat", "w") == NULL)
 				{
 					fwrite(_keyCon.data(), sizeof(int), static_cast<size_t>(end(INPUT_ID())), filePt);
 					fclose(filePt);
