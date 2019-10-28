@@ -23,14 +23,15 @@ KeyState::KeyState()
 	_confID = INPUT_ID::LEFT;		// ·°ºİÌ¨¸Ş—p‚Ì•Ï”
 
 	// Ì§²Ù‚©‚ç·°î•ñ‚Ì“Ç‚İ‚İ
-	FILE *tmppt;
-	if (fopen_s(&tmppt, "key.dat", "r"))
+	if (fopen_s(&filePt, "key.dat", "r") == 0)
 	{
-		fread();
+		_keyCon.resize(static_cast<size_t>(end(INPUT_ID())));
+		fread(_keyCon.data(), sizeof(int), static_cast<size_t>(end(INPUT_ID())), filePt);
+		fclose(filePt);
 	}
 	else
 	{
-		_keyCon = _keyConDef;			// ÃŞ°À‚ğ•Û‘¶
+		_keyCon = _keyConDef;			// –³‚©‚Á‚½ê‡ÃŞÌ«ÙÄ‚Ì·°ºİÌ¨¸Ş‚ğŠi”[
 	}
 
 	// ÒİÊŞ°ŠÖ”‚ÌÎß²İÀ‚ÍµÌ¾¯Ä‚É‚È‚Á‚Ä‚¢‚é
@@ -121,6 +122,11 @@ void KeyState::SetKeyConfig(void)
 			// ÅŒã‚Ì·°ºİÌ¨¸Ş‚ªI‚í‚Á‚½
 			if (_confID >= end(_confID))
 			{
+				if (fopen_s(&filePt, "key.dat", "w") == 0)
+				{
+					fwrite(_keyCon.data(), sizeof(int), static_cast<size_t>(end(INPUT_ID())), filePt);
+					fclose(filePt);
+				}
 				func = &KeyState::RefKeyData;
 				TRACE("·°ºİÌ¨¸Ş‚ÌI—¹\n")
 				break;
