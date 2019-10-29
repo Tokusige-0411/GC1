@@ -21,10 +21,13 @@ void Enemy::Update(void)
 	{
 		return;
 	}
-	if (rand() % 300 == 0)
-	{
-		SetAlive(false);
-	}
+
+	moveCtl.Update();
+
+	//if (rand() % 300 == 0)
+	//{
+	//	SetAlive(false);
+	//}
 }
 
 

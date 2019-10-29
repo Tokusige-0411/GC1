@@ -27,7 +27,7 @@ public:
 	const VecInt& GetID(const std::string& key);									// ‚ ‚é‚©‚Ç‚¤‚©‚ğŠm”F
 	const VecInt& GetID(const std::string& key, const std::string& fileName);		// 1–‡ŠG
 	const VecInt& GetID(const std::string& key, const std::string& fileName,		// Á¯Ìß‰æ‘œ
-						const Vector2 divSize, const Vector2 divCnt);
+						const vector2Int divSize, const vector2Int divCnt);
 private:
 	// ½Ï°ÄÎß²İÀ°‚ÍÃŞÌ«ÙÄ‚ÅÃŞ½Ä×¸À°‚ªŒÄ‚Î‚ê‚é
 	// ÕÆ°¸Îß²İÀ°‚ÍŠÇ—‚µ‚Ä‚¢‚é‚¾‚¯(ÒİÊŞ°‚Å‚Í‚È‚¢)‚È‚Ì‚ÅÃŞ½Ä×¸À‚É±¸¾½‚Å‚«‚È‚¢

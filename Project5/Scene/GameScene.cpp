@@ -22,7 +22,7 @@ GameScene::GameScene()
 	{
 		for (int x = 0; x < 5; x++)
 		{
-			enState = { ENEMY_TYPE::A, { 100 + x * 60, 100 + y * 64 }, { 0, 0 } };
+			enState = { ENEMY_TYPE::A, { static_cast<double>(100 + x * 60), static_cast<double>(100 + y * 64) }, { 0, 0 } };
 			_objList.emplace_back(new Enemy(enState));
 		}
 	}

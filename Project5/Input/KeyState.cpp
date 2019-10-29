@@ -23,15 +23,16 @@ KeyState::KeyState()
 	_confID = INPUT_ID::LEFT;		// ·°ºİÌ¨¸Ş—p‚Ì•Ï”
 
 	// Ì§²Ù‚©‚ç·°î•ñ‚Ì“Ç‚İ‚İ
-	if ((fopen_s(&filePt, "data/key.dat", "r")) == NULL)
+	fopen_s(&filePt, "data/key.dat", "rb");
+	if (filePt == nullptr)
 	{
-		_keyCon.resize(static_cast<size_t>(end(INPUT_ID())));
-		fread(_keyCon.data(), sizeof(_keyCon[0]), static_cast<size_t>(end(INPUT_ID())), filePt);
-		fclose(filePt);
+		_keyCon = _keyConDef;			// –³‚©‚Á‚½ê‡ÃŞÌ«ÙÄ‚Ì·°ºİÌ¨¸Ş‚ğŠi”[
 	}
 	else
 	{
-		_keyCon = _keyConDef;			// –³‚©‚Á‚½ê‡ÃŞÌ«ÙÄ‚Ì·°ºİÌ¨¸Ş‚ğŠi”[
+		_keyCon.resize(static_cast<size_t>(end(INPUT_ID())));
+		fread(_keyCon.data(), sizeof(_keyCon[0]), _keyCon.size(), filePt);
+		fclose(filePt);
 	}
 
 	// ÒİÊŞ°ŠÖ”‚ÌÎß²İÀ‚ÍµÌ¾¯Ä‚É‚È‚Á‚Ä‚¢‚é
@@ -122,9 +123,11 @@ void KeyState::SetKeyConfig(void)
 			// ÅŒã‚Ì·°ºİÌ¨¸Ş‚ªI‚í‚Á‚½
 			if (_confID >= end(_confID))
 			{
-				if ((fopen_s(&filePt, "data/key.dat", "w")) == NULL)
+				// ·°ÃŞ°À‚ğkey.dat‚É•Û‘¶
+				fopen_s(&filePt, "data/key.dat", "wb");
+				if (filePt != nullptr)
 				{
-					fwrite(_keyCon.data(), sizeof(_keyCon[0]), static_cast<size_t>(end(INPUT_ID())), filePt);
+					fwrite(_keyCon.data(), sizeof(_keyCon[0]), _keyCon.size(), filePt);
 					fclose(filePt);
 				}
 				else

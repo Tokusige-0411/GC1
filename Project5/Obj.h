@@ -48,7 +48,7 @@ protected:
 	bool DestroyPrpc(void);			// “–‚½‚è”»’è‚È‚Ç‚Ég‚¤
 	bool _alive;					// ¶‘¶Ì×¸Ş
 	bool _dead;						// €–SÌ×¸Ş
-	Vector2 _pos;					// •`‰æˆÊ’u
-	Vector2 _size;					// •`‰æ‚Ì»²½Ş
+	vector2Dbl _pos;				// •`‰æˆÊ’u
+	vector2Int _size;				// •`‰æ‚Ì»²½Ş
 };
 

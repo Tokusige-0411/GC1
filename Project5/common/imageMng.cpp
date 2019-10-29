@@ -22,7 +22,7 @@ const VecInt & ImageMng::GetID(const std::string & key, const std::string & file
 }
 
 // ﾁｯﾌﾟなど
-const VecInt & ImageMng::GetID(const std::string & key, const std::string & fileName, const Vector2 divSize, const Vector2 divCnt)
+const VecInt & ImageMng::GetID(const std::string & key, const std::string & fileName, const vector2Int divSize, const vector2Int divCnt)
 {
 	// ｲﾃﾚｰﾀｰ(反復子) 覆いかぶさっているもの
 	// ビギンとエンド
