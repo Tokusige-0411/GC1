@@ -33,7 +33,7 @@ Vector2Template<T> & Vector2Template<T>::operator=(const Vector2Template<T> & ve
 }
 
 template<class T>
-Vector2Template<T> & Vector2Template<T>::operator[](Vector2Template<T> i)
+Vector2Template<T> & Vector2Template<T>::operator[](int i)
 {
 	if (i == 0)
 	{
