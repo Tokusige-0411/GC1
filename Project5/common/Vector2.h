@@ -13,7 +13,7 @@ public:
 	Vector2Template& operator = (const Vector2Template& vec);
 
 	// “Y‚¦Žš‰‰ŽZŽq
-	Vector2Template& operator [] (Vector2Template i);
+	Vector2Template& operator [] (T i);
 
 	// ”äŠr‰‰ŽZŽq
 	Vector2Template operator == (const Vector2Template& vec)const;
