@@ -5,8 +5,8 @@
 #include <Vector2.h>
 #include "BeseScene.h"
 
-// 描画するのに必要な情報<ImageID, 座標X, 座標Y>
-using DrawQuwT = std::tuple<int, int, int>;
+// 描画するのに必要な情報<ImageID, 座標X, 座標Y, 画像の回転角>
+using DrawQuwT = std::tuple<int, double, double, double>;
 
 // lp ﾛﾝｸﾞﾎﾟｲﾝﾀｰ
 #define lpSceneMng SceneMng::GetInstance()

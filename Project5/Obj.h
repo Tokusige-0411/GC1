@@ -50,5 +50,6 @@ protected:
 	bool _dead;						// Ž€–SÌ×¸Þ
 	vector2Dbl _pos;				// •`‰æˆÊ’u
 	vector2Int _size;				// •`‰æ‚Ì»²½Þ
+	double _rad;					// Šp“x
 };
 
