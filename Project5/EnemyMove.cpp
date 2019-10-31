@@ -18,12 +18,16 @@ void EnemyMove::Update(void)
 
 bool EnemyMove::SetMoveState(MoveState & state, bool newFlag)
 {
+	// 新しく設定されたら中身を空にする
 	if (newFlag)
 	{
 		_aimState.clear();
 	}
+
+	// 所有権を渡す
 	_aimState = std::move(state);
 	
+	// 新しく設定されたら関数を設定する
 	if (newFlag)
 	{
 		SetMovePrg();
@@ -35,6 +39,8 @@ bool EnemyMove::SetMoveState(MoveState & state, bool newFlag)
 void EnemyMove::SetMovePrg(void)
 {
 	_aimCnt++;
+
+	// ｶｳﾝﾄが回ってたら何もせず終わる
 	if (_aimCnt >= _aimState.size())
 	{
 		return;
@@ -44,19 +50,19 @@ void EnemyMove::SetMovePrg(void)
 	_endPos = _aimState[_aimCnt].second;
 	switch (_aimState[_aimCnt].first)
 	{
-	case(MOVE_TYPE::WAIT):
+	case MOVE_TYPE::WAIT:
 		_move = Wait;
 		break;
-	case(MOVE_TYPE::SIGMOID):
+	case MOVE_TYPE::SIGMOID:
 		_move = MoveSigmoid;
 		break;
-	case(MOVE_TYPE::SPIRAL):
+	case MOVE_TYPE::SPIRAL:
 		_move = MoveSpairal;
 		break;
-	case(MOVE_TYPE::PITIN):
+	case MOVE_TYPE::PITIN:
 		_move = PitIn;
 		break;
-	case(MOVE_TYPE::LR):
+	case MOVE_TYPE::LR:
 		_move = MoveLR;
 		break;
 	default:
