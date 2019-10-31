@@ -51,19 +51,19 @@ void EnemyMove::SetMovePrg(void)
 	switch (_aimState[_aimCnt].first)
 	{
 	case MOVE_TYPE::WAIT:
-		_move = Wait;
+		_move = &EnemyMove::Wait;
 		break;
 	case MOVE_TYPE::SIGMOID:
-		_move = MoveSigmoid;
+		_move = &EnemyMove::MoveSigmoid;
 		break;
 	case MOVE_TYPE::SPIRAL:
-		_move = MoveSpairal;
+		_move = &EnemyMove::MoveSpairal;
 		break;
 	case MOVE_TYPE::PITIN:
-		_move = PitIn;
+		_move = &EnemyMove::PitIn;
 		break;
 	case MOVE_TYPE::LR:
-		_move = MoveLR;
+		_move = &EnemyMove::MoveLR;
 		break;
 	default:
 		AST();

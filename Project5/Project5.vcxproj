@@ -71,11 +71,11 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <IncludePath>$(DX_LIB);$(SolutionDir);$(SolutionDir)\_debug;$(SolutionDir)\common;$(SolutionDir)\Input;$(IncludePath)</IncludePath>
-    <LibraryPath>$(Dxlib);$(LibraryPath)</LibraryPath>
+    <LibraryPath>$(DX_LIB);$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <IncludePath>$(DX_LIB);$(SolutionDir);$(SolutionDir)\_debug;$(SolutionDir)\common;$(SolutionDir)\Input;$(IncludePath)</IncludePath>
-    <LibraryPath>$(Dxlib);$(LibraryPath)</LibraryPath>
+    <LibraryPath>$(DX_LIB);$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
