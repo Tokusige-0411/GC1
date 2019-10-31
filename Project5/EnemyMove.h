@@ -11,6 +11,7 @@ enum class MOVE_TYPE
 	LR				// 左右移動
 };
 
+// <動きの種類, 動きの目標地点>
 using MoveState = std::vector<std::pair<MOVE_TYPE, vector2Dbl>>;
 
 class EnemyMove
