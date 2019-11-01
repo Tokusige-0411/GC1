@@ -17,12 +17,18 @@ GameScene::GameScene()
 		new Player({ 0, 0 }, { 0, 0 })
 	);
 
-	EnemyState enState;
 	for (int y = 0; y < 5; y++)
 	{
 		for (int x = 0; x < 5; x++)
 		{
-			enState = { ENEMY_TYPE::A, { static_cast<double>(100 + x * 60), static_cast<double>(100 + y * 64) }, { 0, 0 } };
+			MoveState tmpMoveState;
+			tmpMoveState.emplace_back(MOVE_TYPE::WAIT, vector2Dbl{ 180.0, 0.0 });
+			tmpMoveState.emplace_back(MOVE_TYPE::LR, vector2Dbl{ 180.0, 0.0 });
+			EnemyState enState = { ENEMY_TYPE::A,
+								   { static_cast<double>(100 + x * 60), static_cast<double>(100 + y * 64) }, 
+								   { 0, 0 } ,
+								   tmpMoveState,
+								 };
 			_objList.emplace_back(new Enemy(enState));
 		}
 	}

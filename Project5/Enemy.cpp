@@ -12,6 +12,7 @@ Enemy::Enemy(EnemyState & enstate)
 	_pos = std::get<static_cast<int>(ENEMY_STATE::VECTOR)>(enstate);
 	_size = std::get<static_cast<int>(ENEMY_STATE::SIZE)>(enstate);
 	_type = std::get<static_cast<int>(ENEMY_STATE::TYPE)>(enstate);
+	_moveCtl.SetMoveState(std::get<static_cast<int>(ENEMY_STATE::AIM)>(enstate), true);
 	init();
 }
 
@@ -22,7 +23,7 @@ void Enemy::Update(void)
 		return;
 	}
 
-	moveCtl.Update();
+	_moveCtl.Update();
 
 	//if (rand() % 300 == 0)
 	//{

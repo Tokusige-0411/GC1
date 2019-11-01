@@ -16,11 +16,12 @@ enum class ENEMY_STATE
 	TYPE,			// “G‚Ìí—Ş
 	VECTOR,			// À•W
 	SIZE,			// •`‰æ»²½Ş
+	AIM,
 	MAX
 };
 
 // <“G‚Ìí—Ş, À•W, ‰æ‘œ‚Ì»²½Ş>
-using EnemyState = std::tuple<ENEMY_TYPE, vector2Dbl, vector2Int>;
+using EnemyState = std::tuple<ENEMY_TYPE, vector2Dbl, vector2Int, MoveState&>;
 
 class Enemy :
 	public Obj
@@ -31,7 +32,7 @@ public:
 	void Update(void) override;
 	~Enemy();
 private:
-	EnemyMove moveCtl{ _pos };
+	EnemyMove _moveCtl{ _pos };
 	void init(void);		// ‰Šú‰»
 	ENEMY_TYPE _type;		// “G‚Ìí—Ş
 };

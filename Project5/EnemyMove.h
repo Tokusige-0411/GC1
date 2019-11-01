@@ -30,6 +30,8 @@ private:
 	void Wait(void);					// “®‚«‚ğ~‚ß‚é
 	void MoveLR(void);					// ¹Ş°Ñ’†‚Ì¶‰EˆÚ“®
 
+	int count;
+
 	MoveState _aimState;				// “®‚«‚Ì½Ã°À½
 	int _aimCnt;						// “®‚«½Ã°À½‚Ì¶³İÄ
 

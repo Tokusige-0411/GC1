@@ -13,7 +13,11 @@ EnemyMove::~EnemyMove()
 
 void EnemyMove::Update(void)
 {
-	_pos.x++;
+	// 優先度の問題
+	if (_move != nullptr)
+	{
+		(this->*_move)();
+	}
 }
 
 bool EnemyMove::SetMoveState(MoveState & state, bool newFlag)
@@ -41,17 +45,20 @@ void EnemyMove::SetMovePrg(void)
 	_aimCnt++;
 
 	// ｶｳﾝﾄが回ってたら何もせず終わる
-	if (_aimCnt >= _aimState.size())
+	if (_aimCnt >= static_cast<int>(_aimState.size()))
 	{
 		return;
 	}
 
-	_startPos = _pos;
-	_endPos = _aimState[_aimCnt].second;
+	_startPos = _pos;								// 現在の座標を入れる
+	_endPos = _aimState[_aimCnt].second;			// 関数終了位置を入れる
+
+	// 現在のｶｳﾝﾄに応じて処理を決める
 	switch (_aimState[_aimCnt].first)
 	{
 	case MOVE_TYPE::WAIT:
 		_move = &EnemyMove::Wait;
+		count = 0;
 		break;
 	case MOVE_TYPE::SIGMOID:
 		_move = &EnemyMove::MoveSigmoid;
@@ -67,6 +74,7 @@ void EnemyMove::SetMovePrg(void)
 		break;
 	default:
 		AST();
+		_move = nullptr;
 		break;
 	}
 }
@@ -85,6 +93,11 @@ void EnemyMove::PitIn(void)
 
 void EnemyMove::Wait(void)
 {
+	if (count > _aimState[_aimCnt].second.x)
+	{
+		SetMovePrg();
+	}
+	count++;
 }
 
 void EnemyMove::MoveLR(void)
