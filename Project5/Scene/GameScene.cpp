@@ -5,6 +5,7 @@
 #include <imageMng.h>
 #include <Player.h>
 #include <Enemy.h>
+#include "SceneMng.h"
 
 GameScene::GameScene()
 {
@@ -17,16 +18,20 @@ GameScene::GameScene()
 		new Player({ 0, 0 }, { 0, 0 })
 	);
 
+	int posCnt;
+	posCnt = 0;
+
 	for (int y = 0; y < 5; y++)
 	{
-		for (int x = 0; x < 5; x++)
+		for (int x = 0; x < 10; x++)
 		{
 			MoveState tmpMoveState;
-			tmpMoveState.emplace_back(MOVE_TYPE::WAIT, vector2Dbl{ 180.0, 0.0 });
+			tmpMoveState.emplace_back(MOVE_TYPE::WAIT, vector2Dbl{ 30.0 * (y * 10 + x) , 0.0 });
+			tmpMoveState.emplace_back(MOVE_TYPE::PITIN, vector2Dbl{ static_cast<double>(35 * 7 + 32 * x), static_cast<double>(30 + y * 40) });
 			tmpMoveState.emplace_back(MOVE_TYPE::LR, vector2Dbl{ 180.0, 0.0 });
 			EnemyState enState = { ENEMY_TYPE::A,
-								   { static_cast<double>(100 + x * 60), static_cast<double>(100 + y * 64) }, 
-								   { 0, 0 } ,
+								   { static_cast<double>((x % 2) * 800), static_cast<double>((y * 10 + x) % 6 / 2) * 300}, 
+								   { 30, 32 } ,
 								   tmpMoveState,
 								 };
 			_objList.emplace_back(new Enemy(enState));

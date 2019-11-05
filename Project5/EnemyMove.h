@@ -17,7 +17,7 @@ using MoveState = std::vector<std::pair<MOVE_TYPE, vector2Dbl>>;
 class EnemyMove
 {
 public:
-	EnemyMove(vector2Dbl& pos);								// 座標を入れる
+	EnemyMove(vector2Dbl& pos, double & rad);								// 座標を入れる
 	~EnemyMove();
 	void Update(void);										// いろいろ更新
 	bool SetMoveState(MoveState& state, bool newFlag);		// 関数ﾎﾟｲﾝﾀに設定する
@@ -37,6 +37,9 @@ private:
 
 	vector2Dbl _startPos;		// 各移動関数のｽﾀｰﾄ位置
 	vector2Dbl _endPos;			// 各移動関数のｴﾝﾄﾞ位置
-	vector2Dbl & _pos;			// EnemyMove上で使う座標
+	vector2Dbl& _pos;			// EnemyMove上で使う座標
+	double& _rad;
+
+	int _moveCnt;
 };
 

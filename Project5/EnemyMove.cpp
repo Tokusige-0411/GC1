@@ -1,10 +1,15 @@
+#include <cmath>
 #include <_DebugConout.h>
 #include "EnemyMove.h"
 
-EnemyMove::EnemyMove(vector2Dbl& pos) : _pos(pos)
+#define MOVE_CNT 60.0
+
+EnemyMove::EnemyMove(vector2Dbl& pos, double & rad) : _pos(pos), _rad(rad)
 {
 	_move = nullptr;
 	_aimCnt = -1;
+	// 1‚É‚µ‚½‚ç1‰ñ‘½‚­ŒvŽZ‚·‚é‚½‚ß
+	_moveCnt = 1;
 }
 
 EnemyMove::~EnemyMove()
@@ -74,7 +79,7 @@ void EnemyMove::SetMovePrg(void)
 		break;
 	default:
 		AST();
-		_move = nullptr;
+		_move = &EnemyMove::Wait;
 		break;
 	}
 }
@@ -89,6 +94,21 @@ void EnemyMove::MoveSpairal(void)
 
 void EnemyMove::PitIn(void)
 {
+	// _stratPos‚Æ_endPos‚ðŽg‚Á‚ÄˆÚ“®‚³‚¹‚é
+	vector2Dbl tmpPos = _pos;
+	tmpPos.x = (_endPos.x - _startPos.x) / MOVE_CNT;
+	tmpPos.y = (_endPos.y - _startPos.y) / MOVE_CNT;
+
+	_pos.x += tmpPos.x;
+	_pos.y += tmpPos.y;
+
+	_rad = std::atan(tmpPos.y / tmpPos.x);
+
+	if (_moveCnt >= MOVE_CNT)
+	{
+		SetMovePrg();
+	}
+	_moveCnt++;
 }
 
 void EnemyMove::Wait(void)

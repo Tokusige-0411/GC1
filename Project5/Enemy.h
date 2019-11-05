@@ -3,6 +3,8 @@
 #include "Obj.h"
 #include "EnemyMove.h"
 
+
+
 enum class ENEMY_TYPE
 {
 	A,
@@ -20,7 +22,7 @@ enum class ENEMY_STATE
 	MAX
 };
 
-// <“G‚Ìí—Ş, À•W, ‰æ‘œ‚Ì»²½Ş>
+// <“G‚Ìí—Ş, À•W, ‰æ‘œ‚Ì»²½Ş, “®‚«‚Ìí—Ş>
 using EnemyState = std::tuple<ENEMY_TYPE, vector2Dbl, vector2Int, MoveState&>;
 
 class Enemy :
@@ -32,7 +34,7 @@ public:
 	void Update(void) override;
 	~Enemy();
 private:
-	EnemyMove _moveCtl{ _pos };
+	EnemyMove _moveCtl{ _pos, _rad };
 	void init(void);		// ‰Šú‰»
 	ENEMY_TYPE _type;		// “G‚Ìí—Ş
 };
