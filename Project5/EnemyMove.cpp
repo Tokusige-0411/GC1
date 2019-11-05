@@ -99,11 +99,12 @@ void EnemyMove::PitIn(void)
 	tmpPos.x = (_endPos.x - _startPos.x) / MOVE_CNT;
 	tmpPos.y = (_endPos.y - _startPos.y) / MOVE_CNT;
 
+	// ŒvŽZ‚µ‚½À•W‚ð‰ÁŽZ
 	_pos.x += tmpPos.x;
 	_pos.y += tmpPos.y;
+	_rad = (std::atan2(tmpPos.y, tmpPos.x)) + (3.14159 / 2);
 
-	_rad = std::atan(tmpPos.y / tmpPos.x);
-
+	// ¶³ÝÄ‚ð‰ß‚¬‚½‚çLR‚Ö
 	if (_moveCnt >= MOVE_CNT)
 	{
 		SetMovePrg();
@@ -122,4 +123,5 @@ void EnemyMove::Wait(void)
 
 void EnemyMove::MoveLR(void)
 {
+	_rad = 0.0;
 }
