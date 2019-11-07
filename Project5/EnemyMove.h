@@ -40,6 +40,6 @@ private:
 	vector2Dbl& _pos;			// EnemyMoveã‚Åg‚¤À•W
 	double& _rad;
 
-	int _moveCnt;
+	vector2Dbl _oneMoveVec;		// 1ÌÚ°Ñ“–‚½‚è‚ÌˆÚ“®—Ê
 };
 

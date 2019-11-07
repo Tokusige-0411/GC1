@@ -1,3 +1,4 @@
+#include "..\Vector2.h"
 
 template<class T>
 Vector2Template<T>::Vector2Template()
@@ -50,28 +51,28 @@ Vector2Template<T> & Vector2Template<T>::operator[](T i)
 }
 
 template<class T>
-Vector2Template<T> Vector2Template<T>::operator==(const Vector2Template<T> & vec) const
+bool Vector2Template<T>::operator==(const Vector2Template<T> & vec) const
 {
 	return ((this->x == vec.x) && (this->y == vec.y));
 }
 
 template<class T>
-Vector2Template<T> Vector2Template<T>::operator!=(const Vector2Template<T> & vec) const
+bool Vector2Template<T>::operator!=(const Vector2Template<T> & vec) const
 {
 	// return ((this->x != vec.x) || (this->y != vec.y));
 	return !((this->x == vec.x) && (this->y == vec.y));
 }
 
 template<class T>
-Vector2Template<T> Vector2Template<T>::operator>(const Vector2Template<T> & vec) const
+bool Vector2Template<T>::operator>(const Vector2Template<T> & vec) const
 {
-	return (this->x > vec.x) && (this->y > vec.y);
+	return ((this->x > vec.x) && (this->y > vec.y));
 }
 
 template<class T>
-Vector2Template<T> Vector2Template<T>::operator>=(const Vector2Template<T> & vec) const
+bool Vector2Template<T>::operator>=(const Vector2Template<T> & vec) const
 {
-	return (this->x >= vec.x) && (this->y >= vec.y);
+	return ((this->x >= vec.x) && (this->y >= vec.y));
 }
 
 // íPçÄââéZéq
@@ -207,6 +208,12 @@ template<class T>
 Vector2Template<T> operator/(const Vector2Template<T> & u, const T k)
 {
 	Vector2Template<T> vec;
-	vec = { k / u.x, k / u.y };
+	vec = { u.x / k, u.y / k };
 	return vec;
+}
+
+template<class T>
+Vector2Template<T> abs(const Vector2Template<T> & u)
+{
+	return { abs(u.x), abs(u.y) };
 }

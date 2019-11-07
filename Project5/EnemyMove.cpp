@@ -1,6 +1,7 @@
 #include <cmath>
 #include <_DebugConout.h>
 #include "EnemyMove.h"
+#include <Vector2.h>
 
 #define MOVE_CNT 60.0
 
@@ -8,8 +9,6 @@ EnemyMove::EnemyMove(vector2Dbl& pos, double & rad) : _pos(pos), _rad(rad)
 {
 	_move = nullptr;
 	_aimCnt = -1;
-	// 1‚É‚µ‚½‚ç1‰ñ‘½‚­ŒvZ‚·‚é‚½‚ß
-	_moveCnt = 1;
 }
 
 EnemyMove::~EnemyMove()
@@ -73,6 +72,7 @@ void EnemyMove::SetMovePrg(void)
 		break;
 	case MOVE_TYPE::PITIN:
 		_move = &EnemyMove::PitIn;
+		_oneMoveVec = ((_endPos - _startPos) / 120.0);
 		break;
 	case MOVE_TYPE::LR:
 		_move = &EnemyMove::MoveLR;
@@ -95,21 +95,24 @@ void EnemyMove::MoveSpairal(void)
 void EnemyMove::PitIn(void)
 {
 	// _stratPos‚Æ_endPos‚ğg‚Á‚ÄˆÚ“®‚³‚¹‚é
-	vector2Dbl tmpPos = _pos;
-	tmpPos.x = (_endPos.x - _startPos.x) / MOVE_CNT;
-	tmpPos.y = (_endPos.y - _startPos.y) / MOVE_CNT;
+	vector2Dbl _lenght;
 
-	// ŒvZ‚µ‚½À•W‚ğ‰ÁZ
-	_pos.x += tmpPos.x;
-	_pos.y += tmpPos.y;
-	_rad = (std::atan2(tmpPos.y, tmpPos.x)) + (3.14159 / 2);
 
-	// ¶³İÄ‚ğ‰ß‚¬‚½‚çLR‚Ö
-	if (_moveCnt >= MOVE_CNT)
+	if (abs(_endPos.x - _pos.x) >= abs(_oneMoveVec.x))
 	{
+		// ˆÚ“®
+		_pos += _oneMoveVec;
+
+		// Šp“x‚Ìˆ—
+		_lenght = _endPos - _pos;
+		_rad = (atan2(_lenght.y, _lenght.x) + 3.14159 / 2);
+	}
+	else
+	{
+		_pos = _endPos;
+		_rad = 0.0;
 		SetMovePrg();
 	}
-	_moveCnt++;
 }
 
 void EnemyMove::Wait(void)
@@ -123,5 +126,5 @@ void EnemyMove::Wait(void)
 
 void EnemyMove::MoveLR(void)
 {
-	_rad = 0.0;
+
 }
