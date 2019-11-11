@@ -9,6 +9,8 @@ EnemyMove::EnemyMove(vector2Dbl& pos, double & rad) : _pos(pos), _rad(rad)
 {
 	_move = nullptr;
 	_aimCnt = -1;
+	_sigSpeed = 4.0;
+	_sigCount = -5.0;
 }
 
 EnemyMove::~EnemyMove()
@@ -72,7 +74,7 @@ void EnemyMove::SetMovePrg(void)
 		break;
 	case MOVE_TYPE::PITIN:
 		_move = &EnemyMove::PitIn;
-		_oneMoveVec = ((_endPos - _startPos) / 120.0);
+		_oneMoveVec = ((_endPos - _startPos) / 120.0);			// ˆÚ“®ŽžŠÔ‚ª120ÌÚ°Ñ‚É‚È‚é‚æ‚¤‚É
 		break;
 	case MOVE_TYPE::LR:
 		_move = &EnemyMove::MoveLR;
@@ -86,6 +88,20 @@ void EnemyMove::SetMovePrg(void)
 
 void EnemyMove::MoveSigmoid(void)
 {
+	// ¼¸ÞÓ²ÄÞŠÖ”‚ð•`‚­
+	vector2Dbl tmpPos = _pos;
+	
+	tmpPos.x = ((_endPos.x - _startPos.x) / 180);
+	tmpPos.y = ((1.0 / (1.0 + exp(-_sigCount))) * (_endPos.y - _startPos.y));
+	_sigCount += 0.1;
+
+	_pos.x += tmpPos.x;
+	_pos.y = _startPos.y + tmpPos.y;
+
+	//if ()
+	//{
+
+	//}
 }
 
 void EnemyMove::MoveSpairal(void)
@@ -97,7 +113,7 @@ void EnemyMove::PitIn(void)
 	// _stratPos‚Æ_endPos‚ðŽg‚Á‚ÄˆÚ“®‚³‚¹‚é
 	vector2Dbl _lenght;
 
-
+	// ´ÝÄÞ‚ÌˆÊ’u‚É—ˆ‚½‚çLR‚ÉˆÚ‚é‚æ‚¤‚É‚·‚é
 	if (abs(_endPos.x - _pos.x) >= abs(_oneMoveVec.x))
 	{
 		// ˆÚ“®

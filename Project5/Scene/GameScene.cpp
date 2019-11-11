@@ -27,6 +27,7 @@ GameScene::GameScene()
 		{
 			MoveState tmpMoveState;
 			tmpMoveState.emplace_back(MOVE_TYPE::WAIT, vector2Dbl{ 30.0 * (y * 10 + x) , 0.0 });
+			tmpMoveState.emplace_back(MOVE_TYPE::SIGMOID, vector2Dbl{ 400.0 - ((800.0 * 1 / 3) * (((y * 10 + x) % 2) * 2 - 1)) , 600.0 * 5 / 7 });
 			tmpMoveState.emplace_back(MOVE_TYPE::PITIN, vector2Dbl{ static_cast<double>(35 * 7 + 32 * x), static_cast<double>(30 + y * 40) });
 			tmpMoveState.emplace_back(MOVE_TYPE::LR, vector2Dbl{ 180.0, 0.0 });
 			EnemyState enState = { ENEMY_TYPE::A,
@@ -37,6 +38,17 @@ GameScene::GameScene()
 			_objList.emplace_back(new Enemy(enState));
 		}
 	}
+
+	// ÃÞÊÞ¯¸Þ—p
+	//MoveState tmpMoveState;
+	//tmpMoveState.emplace_back(MOVE_TYPE::WAIT, vector2Dbl{ 30.0 , 0.0 });
+	//tmpMoveState.emplace_back(MOVE_TYPE::SIGMOID, vector2Dbl{ 600.0,400.0 });
+	//EnemyState enState = { ENEMY_TYPE::A,
+	//{ 0 , 0 },
+	//{ 30, 32 } ,
+	//	tmpMoveState,
+	//};
+	//_objList.emplace_back(new Enemy(enState));
 }
 
 GameScene::~GameScene()

@@ -55,7 +55,7 @@ void SceneMng::Draw(void)
 	ScreenFlip();
 }
 
-SceneMng::SceneMng() : screenSize{800,600}		// constになる直前に値を初期化する
+SceneMng::SceneMng() : ScreenSize{800,600}		// constになる直前に値を初期化する
 {
 }
 
@@ -96,7 +96,7 @@ bool SceneMng::SysInit(void)
 {
 	// ｼｽﾃﾑ処理
 	SetWindowText("kadai5");
-	SetGraphMode(screenSize.x, screenSize.y, 16);		// 320*600ﾄﾞｯﾄ、65536色ﾓｰﾄﾞに設定
+	SetGraphMode(ScreenSize.x, ScreenSize.y, 16);		// 320*600ﾄﾞｯﾄ、65536色ﾓｰﾄﾞに設定
 	ChangeWindowMode(true);								// true:window false:ﾌﾙｽｸﾘｰﾝ
 	if (DxLib_Init() == -1)								// DXﾗｲﾌﾞﾗﾘの初期化処理
 	{

@@ -54,7 +54,7 @@ public:
 	bool AddDrawQue(DrawQuwT dQue);		// ∑≠∞ÇÃí«â¡
 
 	// -------------ïœêî
-	const vector2Int screenSize;		// Ω∏ÿ∞›ª≤ΩﬁX,Y
+	const vector2Int ScreenSize;		// Ω∏ÿ∞›ª≤ΩﬁX,Y
 private:
 	static SceneMng* sInstance;
 	unique_Base _activeScene;

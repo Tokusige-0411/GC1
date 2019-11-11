@@ -138,6 +138,7 @@
     <ClCompile Include="Scene\SceneMng.cpp" />
     <ClCompile Include="Scene\TitleScene.cpp" />
     <ClCompile Include="_debug\_DebugConout.cpp" />
+    <ClCompile Include="_debug\_DebugDispOut.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="common\detirlth\Vector2.h" />
@@ -155,6 +156,7 @@
     <ClInclude Include="common\Vector2.h" />
     <ClInclude Include="Scene\TitleScene.h" />
     <ClInclude Include="_debug\_DebugConout.h" />
+    <ClInclude Include="_debug\_DebugDispOut.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
