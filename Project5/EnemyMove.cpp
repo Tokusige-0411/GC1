@@ -10,7 +10,7 @@ EnemyMove::EnemyMove(vector2Dbl& pos, double & rad) : _pos(pos), _rad(rad)
 	_move = nullptr;
 	_aimCnt = -1;
 	_sigSpeed = 4.0;
-	_sigCount = -5.0;
+	_sigCount = -10.0;
 }
 
 EnemyMove::~EnemyMove()
@@ -68,6 +68,7 @@ void EnemyMove::SetMovePrg(void)
 		break;
 	case MOVE_TYPE::SIGMOID:
 		_move = &EnemyMove::MoveSigmoid;
+		count = 0;
 		break;
 	case MOVE_TYPE::SPIRAL:
 		_move = &EnemyMove::MoveSpairal;
@@ -88,20 +89,27 @@ void EnemyMove::SetMovePrg(void)
 
 void EnemyMove::MoveSigmoid(void)
 {
-	// ¼¸ÞÓ²ÄÞŠÖ”‚ð•`‚­
-	vector2Dbl tmpPos = _pos;
+	// ¼¸ÞÓ²ÄÞ‹Èü‚ð•`‚­
+	vector2Dbl tmpPos = _pos;			// À•W‚ð‹‚ß‚é—p
+	vector2Dbl oldPos = _pos;			// Šp“x‚ð‹‚ß‚é—p
 	
-	tmpPos.x = ((_endPos.x - _startPos.x) / 180);
+	tmpPos.x = ((_endPos.x - _startPos.x) / 150.0);
 	tmpPos.y = ((1.0 / (1.0 + exp(-_sigCount))) * (_endPos.y - _startPos.y));
 	_sigCount += 0.1;
 
+	// ‹‚ß‚½ˆÚ“®—Ê‚ðÀ•W‚É”½‰f
 	_pos.x += tmpPos.x;
 	_pos.y = _startPos.y + tmpPos.y;
 
-	//if ()
-	//{
+	// •`‰æ•ûŒü‚ðŒˆ’è
+	_rad = (atan2(_pos.y - oldPos.y, _pos.x - oldPos.x) + 3.14159 / 2);
 
-	//}
+	// •b”‚Ü‚Ås‚Á‚½‚çMoveSpairal‚É•ÏŠ·
+	if (count >= 150)
+	{
+		SetMovePrg();
+	}
+	count++;
 }
 
 void EnemyMove::MoveSpairal(void)
