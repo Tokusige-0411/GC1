@@ -2,8 +2,10 @@
 #include <_DebugConout.h>
 #include "EnemyMove.h"
 #include <Vector2.h>
+#include "Scene\SceneMng.h"
 
 #define MOVE_CNT 60.0
+#define pi 3.14159
 
 EnemyMove::EnemyMove(vector2Dbl& pos, double & rad) : _pos(pos), _rad(rad)
 {
@@ -103,7 +105,7 @@ void EnemyMove::MoveSigmoid(void)
 	_pos.y = _startPos.y + tmpPos.y;
 
 	// ï`âÊï˚å¸ÇåàíË
-	_rad = (atan2(_pos.y - oldPos.y, _pos.x - oldPos.x) + 3.14159 / 2);
+	_rad = (atan2(_pos.y - oldPos.y, _pos.x - oldPos.x) + pi / 2);
 
 	// ïbêîÇ‹Ç≈çsÇ¡ÇΩÇÁMoveSpairalÇ…ïœä∑
 	if (count >= 150)
@@ -116,22 +118,33 @@ void EnemyMove::MoveSigmoid(void)
 void EnemyMove::MoveSpairal(void)
 {
 	vector2Dbl tmpPos;
+	vector2Dbl oldPos = _pos;
 
-	tmpPos.x = _spaiRad * cos(_spaiAngl * (3.14159 / 180.0));
-	tmpPos.y = _spaiRad * sin(_spaiAngl * (3.14159 / 180.0));
+	tmpPos.x = _spaiRad * cos(_spaiAngl * (pi / 180.0));
+	tmpPos.y = _spaiRad * sin(_spaiAngl * (pi / 180.0));
 
 	_pos.x = _endPos.x + tmpPos.x;
 	_pos.y = _endPos.y + tmpPos.y;
 
-	if (_startPos.x < 400.0)
+	// ï`âÊï˚å¸ÇåàíË
+	_rad = (atan2(_pos.y - oldPos.y, _pos.x - oldPos.x) + pi / 2);;
+
+	if (_startPos.x < lpSceneMng.ScreenSize.x/2)
 	{
-		_spaiAngl++;
+		_spaiAngl += 2;
 	}
 	else
 	{
-		_spaiAngl--;
+		_spaiAngl -= 2;
 	}
-	_spaiRad -= 0.5;
+
+	// îºåaÇè¨Ç≥Ç≠ÇµÇƒÇ¢Ç≠
+	_spaiRad -= 0.1;
+
+	if (abs(_spaiAngl - 90) > 720)
+	{
+		SetMovePrg();
+	}
 }
 
 void EnemyMove::PitIn(void)
@@ -147,7 +160,7 @@ void EnemyMove::PitIn(void)
 
 		// äpìxÇÃèàóù
 		_lenght = _endPos - _pos;
-		_rad = (atan2(_lenght.y, _lenght.x) + 3.14159 / 2);
+		_rad = (atan2(_lenght.y, _lenght.x) + pi / 2);
 	}
 	else
 	{
