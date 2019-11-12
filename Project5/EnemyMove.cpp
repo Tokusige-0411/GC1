@@ -9,8 +9,8 @@ EnemyMove::EnemyMove(vector2Dbl& pos, double & rad) : _pos(pos), _rad(rad)
 {
 	_move = nullptr;
 	_aimCnt = -1;
-	_sigSpeed = 4.0;
-	_sigCount = -10.0;
+	_sigCount = -5.0;
+	_spaiAngl = 90.0;
 }
 
 EnemyMove::~EnemyMove()
@@ -72,6 +72,7 @@ void EnemyMove::SetMovePrg(void)
 		break;
 	case MOVE_TYPE::SPIRAL:
 		_move = &EnemyMove::MoveSpairal;
+		_spaiRad = abs(_endPos.y - _startPos.y);			// _endPosÇäÓèÄÇ…îºåaÇåàíË
 		break;
 	case MOVE_TYPE::PITIN:
 		_move = &EnemyMove::PitIn;
@@ -114,6 +115,23 @@ void EnemyMove::MoveSigmoid(void)
 
 void EnemyMove::MoveSpairal(void)
 {
+	vector2Dbl tmpPos;
+
+	tmpPos.x = _spaiRad * cos(_spaiAngl * (3.14159 / 180.0));
+	tmpPos.y = _spaiRad * sin(_spaiAngl * (3.14159 / 180.0));
+
+	_pos.x = _endPos.x + tmpPos.x;
+	_pos.y = _endPos.y + tmpPos.y;
+
+	if (_startPos.x < 400.0)
+	{
+		_spaiAngl++;
+	}
+	else
+	{
+		_spaiAngl--;
+	}
+	_spaiRad -= 0.5;
 }
 
 void EnemyMove::PitIn(void)

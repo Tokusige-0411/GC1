@@ -55,6 +55,7 @@ public:
 
 	// -------------•Ï”
 	const vector2Int ScreenSize;		// ½¸Ø°İ»²½ŞX,Y
+
 private:
 	static SceneMng* sInstance;
 	unique_Base _activeScene;
