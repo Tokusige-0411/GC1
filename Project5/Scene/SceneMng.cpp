@@ -1,4 +1,5 @@
 #include <DxLib.h>
+#include <_DebugDispOut.h>
 #include "SceneMng.h"
 #include "GameScene.h"
 #include "TitleScene.h"
@@ -16,6 +17,7 @@ enum class DRAW_QUE
 
 void SceneMng::Draw(void)
 {
+	_dbgAddDraw();
 	SetDrawScreen(DX_SCREEN_BACK);
 	ClsDrawScreen();
 
@@ -69,6 +71,7 @@ void SceneMng::Run(void)
 	_activeScene = std::make_unique<GameScene>();
 	while (!ProcessMessage() && !CheckHitKey(KEY_INPUT_ESCAPE))
 	{
+		_dbgStartDraw();
 		_drawList.clear();
 		// ÒÓØ°‚ğ’¼ÚŠÇ—‚·‚é‚×‚«‚Å‚Í‚È‚¢(get‚ğ‚ ‚Ü‚èg‚í‚È‚¢‚æ‚¤‚É)
 		// [(*_activeScene).] = [_activeScene->]
@@ -104,6 +107,7 @@ bool SceneMng::SysInit(void)
 	}
 
 	SetDrawScreen(DX_SCREEN_BACK);						// •`‰ææ‚ğÊŞ¯¸ÊŞ¯Ì§‚Éİ’è
+	_dbgSetup(255);
 
 	return false;
 }
