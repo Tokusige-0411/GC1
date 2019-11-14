@@ -1,11 +1,12 @@
 #include <cmath>
 #include <_DebugConout.h>
+#include <_DebugDispOut.h>
 #include "EnemyMove.h"
 #include <Vector2.h>
 #include "Scene\SceneMng.h"
 		
-#define SPAI_RAD 450.0		// ‰ñ“]‚³‚¹‚½‚¢Šp“x
-#define pi 3.14159
+#define SPAI_RAD 540.0		// ‰ñ“]‚³‚¹‚½‚¢Šp“x
+#define pi 3.14159			// ‰~Žü—¦
 
 EnemyMove::EnemyMove(vector2Dbl& pos, double & rad) : _pos(pos), _rad(rad)
 {
@@ -26,6 +27,7 @@ void EnemyMove::Update(void)
 	{
 		(this->*_move)();
 	}
+	_dbgDrawPixel(_pos.x, _pos.y, 0xffffff);
 }
 
 bool EnemyMove::SetMoveState(MoveState & state, bool newFlag)
@@ -75,10 +77,15 @@ void EnemyMove::SetMovePrg(void)
 	case MOVE_TYPE::SPIRAL:
 		_move = &EnemyMove::MoveSpairal;
 		_spaiRad = abs(_endPos.y - _startPos.y);			// _endPos‚ðŠî€‚É”¼Œa‚ðŒˆ’è
+		if (_endPos.y > _startPos.y)
+		{
+			_spaiAngl = -90.0;
+		}
+		count = 0;
 		break;
 	case MOVE_TYPE::PITIN:
 		_move = &EnemyMove::PitIn;
-		_oneMoveVec = ((_endPos - _startPos) / 120.0);			// ˆÚ“®ŽžŠÔ‚ª120ÌÚ°Ñ‚É‚È‚é‚æ‚¤‚É
+		_oneMoveVec = ((_endPos - _startPos) / 90.0);			// ˆÚ“®ŽžŠÔ‚ª120ÌÚ°Ñ‚É‚È‚é‚æ‚¤‚É
 		break;
 	case MOVE_TYPE::LR:
 		_move = &EnemyMove::MoveLR;
@@ -131,17 +138,32 @@ void EnemyMove::MoveSpairal(void)
 
 	if (_startPos.x < lpSceneMng.ScreenSize.x/2)
 	{
-		_spaiAngl += SPAI_RAD / 150;
+		if (_endPos.y < _startPos.y)
+		{
+			_spaiAngl += SPAI_RAD / 150;
+		}
+		else
+		{
+			_spaiAngl -= SPAI_RAD / 150;
+		}
 	}
 	else
 	{
-		_spaiAngl -= SPAI_RAD / 150;
+		if (_endPos.y < _startPos.y)
+		{
+			_spaiAngl -= SPAI_RAD / 150;
+		}
+		else
+		{
+			_spaiAngl += SPAI_RAD / 150;
+		}
 	}
+	count += 3;
 
 	// ”¼Œa‚ð¬‚³‚­‚µ‚Ä‚¢‚­
 	_spaiRad -= 0.2;
 
-	if (abs(_spaiAngl - 90) > SPAI_RAD)
+	if (count >= SPAI_RAD)
 	{
 		SetMovePrg();
 	}

@@ -26,12 +26,12 @@ GameScene::GameScene()
 		for (int x = 0; x < 10; x++)
 		{
 			MoveState tmpMoveState;
-			//tmpMoveState.emplace_back(MOVE_TYPE::WAIT, vector2Dbl{ 30.0 * (y * 10 + x) , 0.0 });
-			tmpMoveState.emplace_back(MOVE_TYPE::WAIT, vector2Dbl{ 0.0 , 0.0 });
+			tmpMoveState.emplace_back(MOVE_TYPE::WAIT, vector2Dbl{ 30.0 * (y * 10 + x) , 0.0 });
+			//tmpMoveState.emplace_back(MOVE_TYPE::WAIT, vector2Dbl{ 0.0 , 0.0 });
 			tmpMoveState.emplace_back(
 									   MOVE_TYPE::SIGMOID, 
 									   vector2Dbl{ 400.0 - ((static_cast<double>(lpSceneMng.ScreenSize.x) * 1 / 5) * (((y * 10 + x) % 2) * 2 - 1)) , 
-									   static_cast<double>(lpSceneMng.ScreenSize.y) * 5 / 7}
+									  (static_cast<double>(lpSceneMng.ScreenSize.y) * 4 / 7) + ((static_cast<double>(lpSceneMng.ScreenSize.y) * 1 / 7) * (((y * 10 + x) % 6 / 4) * -2 + 1))}
 									  );
 			tmpMoveState.emplace_back(
 									   MOVE_TYPE::SPIRAL, 

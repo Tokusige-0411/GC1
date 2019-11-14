@@ -137,7 +137,7 @@ bool _DebugDispOut::StartDrawDebug(void)
 	int ghBefor;
 	ghBefor = GetDrawScreen();
 	SetDrawScreen(_DbgScreen);
-	ClsDrawScreen();
+	//ClsDrawScreen();
 	SetDrawScreen(ghBefor);
 	return true;
 }
@@ -154,7 +154,7 @@ bool _DebugDispOut::AddDrawDebug(void)
 	}
 	if (dispFlag)
 	{
-		lpSceneMng.AddDrawQue({ _DbgScreen,lpSceneMng.ScreenSize.x/2,lpSceneMng.ScreenSize.y / 2, 0, 32768, LAYER::UI});
+		lpSceneMng.AddDrawQue({ _DbgScreen,lpSceneMng.ScreenSize.x / 2,lpSceneMng.ScreenSize.y / 2, 0, 32768, LAYER::UI});
 	}
 	WaitMode();
 	return true;
