@@ -5,8 +5,25 @@
 #include <Vector2.h>
 #include "BeseScene.h"
 
+enum class DRAW_QUE
+{
+	IMAGE,
+	X,
+	Y,
+	RAD,
+	ZORDER,		// Ú²Ô°“à‚Ì•`‰æ‡(”’l‚ª’á‚¢‚Ù‚¤‚ª‰œ)
+	LAYER		// ID‚Ì¬‚³‚¢‚à‚Ì‚ğ‰œ‚É•`‰æ
+};
+
+enum class LAYER
+{
+	BG,
+	CHAR,
+	UI
+};
+
 // •`‰æ‚·‚é‚Ì‚É•K—v‚Èî•ñ<ImageID, À•WX, À•WY, ‰æ‘œ‚Ì‰ñ“]Šp>
-using DrawQuwT = std::tuple<int, double, double, double>;
+using DrawQuwT = std::tuple<int, double, double, double, int, LAYER>;
 
 // lp Ûİ¸ŞÎß²İÀ°
 #define lpSceneMng SceneMng::GetInstance()

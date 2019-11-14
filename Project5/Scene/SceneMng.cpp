@@ -1,23 +1,22 @@
 #include <DxLib.h>
+#include <algorithm>
 #include <_DebugDispOut.h>
+#include <imageMng.h>
 #include "SceneMng.h"
 #include "GameScene.h"
 #include "TitleScene.h"
 
-
 SceneMng* SceneMng::sInstance = nullptr;
-
-enum class DRAW_QUE
-{
-	IMAGE,
-	X,
-	Y,
-	RAD
-};
 
 void SceneMng::Draw(void)
 {
 	_dbgAddDraw();
+
+	// _drawList‚ÌLAYER‚ğ¸‡‚É
+	std::sort(_drawList.begin(), _drawList.end(),
+		[](const DrawQuwT& x, const DrawQuwT& y) 
+	{return ((std::get<static_cast<int>(DRAW_QUE::LAYER)>(x)) < (std::get<static_cast<int>(DRAW_QUE::LAYER)>(y))); });
+
 	SetDrawScreen(DX_SCREEN_BACK);
 	ClsDrawScreen();
 
@@ -73,6 +72,7 @@ void SceneMng::Run(void)
 	{
 		_dbgStartDraw();
 		_drawList.clear();
+		lpSceneMng.AddDrawQue({ IMAGE_ID("˜g")[0], ScreenSize.x / 2, ScreenSize.y / 2, 0.0, 0, LAYER::UI });
 		// ÒÓØ°‚ğ’¼ÚŠÇ—‚·‚é‚×‚«‚Å‚Í‚È‚¢(get‚ğ‚ ‚Ü‚èg‚í‚È‚¢‚æ‚¤‚É)
 		// [(*_activeScene).] = [_activeScene->]
 		// Š—LŒ ‚ğ“n‚·(ºËß°‚ğì‚ç‚È‚¢)
@@ -108,6 +108,7 @@ bool SceneMng::SysInit(void)
 
 	SetDrawScreen(DX_SCREEN_BACK);						// •`‰ææ‚ğÊŞ¯¸ÊŞ¯Ì§‚Éİ’è
 	_dbgSetup(255);
+	lpImageMng.GetID("˜g", "image/frame.png");
 
 	return false;
 }

@@ -31,12 +31,12 @@ GameScene::GameScene()
 			tmpMoveState.emplace_back(
 									   MOVE_TYPE::SIGMOID, 
 									   vector2Dbl{ 400.0 - ((static_cast<double>(lpSceneMng.ScreenSize.x) * 1 / 5) * (((y * 10 + x) % 2) * 2 - 1)) , 
-									   static_cast<double>(lpSceneMng.ScreenSize.y) * 5 / 7 }
+									   static_cast<double>(lpSceneMng.ScreenSize.y) * 5 / 7}
 									  );
 			tmpMoveState.emplace_back(
 									   MOVE_TYPE::SPIRAL, 
 									   vector2Dbl{ 400.0 - ((static_cast<double>(lpSceneMng.ScreenSize.x) * 1 / 5) * (((y * 10 + x) % 2) * 2 - 1)) ,
-									   static_cast<double>(lpSceneMng.ScreenSize.y) / 2 }
+									   static_cast<double>(lpSceneMng.ScreenSize.y) * 4 / 7 }
 									  );
 			tmpMoveState.emplace_back(MOVE_TYPE::PITIN, vector2Dbl{ static_cast<double>(35 * 7 + 32 * x), static_cast<double>(30 + y * 40) });
 			tmpMoveState.emplace_back(MOVE_TYPE::LR, vector2Dbl{ 180.0, 0.0 });

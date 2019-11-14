@@ -3,8 +3,8 @@
 #include "EnemyMove.h"
 #include <Vector2.h>
 #include "Scene\SceneMng.h"
-
-#define MOVE_CNT 60.0
+		
+#define SPAI_RAD 450.0		// ‰ñ“]‚³‚¹‚½‚¢Šp“x
 #define pi 3.14159
 
 EnemyMove::EnemyMove(vector2Dbl& pos, double & rad) : _pos(pos), _rad(rad)
@@ -131,17 +131,17 @@ void EnemyMove::MoveSpairal(void)
 
 	if (_startPos.x < lpSceneMng.ScreenSize.x/2)
 	{
-		_spaiAngl += 2;
+		_spaiAngl += SPAI_RAD / 150;
 	}
 	else
 	{
-		_spaiAngl -= 2;
+		_spaiAngl -= SPAI_RAD / 150;
 	}
 
 	// ”¼Œa‚ð¬‚³‚­‚µ‚Ä‚¢‚­
-	_spaiRad -= 0.1;
+	_spaiRad -= 0.2;
 
-	if (abs(_spaiAngl - 90) > 720)
+	if (abs(_spaiAngl - 90) > SPAI_RAD)
 	{
 		SetMovePrg();
 	}

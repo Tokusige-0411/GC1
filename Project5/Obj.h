@@ -51,5 +51,6 @@ protected:
 	vector2Dbl _pos;				// •`‰æˆÊ’u
 	vector2Int _size;				// •`‰æ‚Ì»²½Þ
 	double _rad;					// Šp“x
+	int _zOrder;						// 
 };
 
