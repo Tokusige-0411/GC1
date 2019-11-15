@@ -23,7 +23,7 @@ enum class LAYER
 };
 
 // •`‰æ‚·‚é‚Ì‚É•K—v‚Èî•ñ<ImageID, À•WX, À•WY, ‰æ‘œ‚Ì‰ñ“]Šp>
-using DrawQuwT = std::tuple<int, double, double, double, int, LAYER>;
+using DrawQueT = std::tuple<int, double, double, double, int, LAYER>;
 
 // lp Ûİ¸ŞÎß²İÀ°
 #define lpSceneMng SceneMng::GetInstance()
@@ -68,7 +68,7 @@ public:
 	// std::pair<int, double> data1
 	// std::tuple<int, int, int> 
 
-	bool AddDrawQue(DrawQuwT dQue);		// ·­°‚Ì’Ç‰Á
+	bool AddDrawQue(DrawQueT dQue);		// ·­°‚Ì’Ç‰Á
 
 	// -------------•Ï”
 	const vector2Int ScreenSize;		// ½¸Ø°İ»²½ŞX,Y
@@ -79,7 +79,8 @@ private:
 
 	void Draw(void);					// ‚·‚×‚Ä‚ğ•`‰æ‚·‚é
 
-	std::vector<DrawQuwT> _drawList;	// ·­°‚Ì’Ç‰Á
+	std::map<LAYER, int > _screenID;	// •`‰æ‚·‚é‰æ–Ê‚ğw’è‚·‚é
+	std::vector<DrawQueT> _drawList;	// ·­°‚Ì’Ç‰Á
 
 	SceneMng();
 	~SceneMng();

@@ -14,8 +14,12 @@ void SceneMng::Draw(void)
 
 	// _drawList‚ÌLAYER‚ğ¸‡‚É
 	std::sort(_drawList.begin(), _drawList.end(),
-		[](const DrawQuwT& x, const DrawQuwT& y) 
-	{return ((std::get<static_cast<int>(DRAW_QUE::LAYER)>(x)) < (std::get<static_cast<int>(DRAW_QUE::LAYER)>(y))); });
+		[](const DrawQueT& x, const DrawQueT& y) {
+		// tie‚ğg‚Á‚Ä•¡”ğŒ‚ğ‚µ‚Ä‚¢‚­
+		// ¶‘¤‚Ì—v‘f‚©‚ç‡”Ô‚É”ä‚×‚ÄAğŒ‚É‡‚í‚È‚©‚Á‚½‚çŸ‚Ì—v‘f‚ğ”ä‚×‚Ä‚¢‚­
+		return std::tie(std::get<static_cast<int>(DRAW_QUE::LAYER)>(x), std::get<static_cast<int>(DRAW_QUE::ZORDER)>(x))
+			< std::tie(std::get<static_cast<int>(DRAW_QUE::LAYER)>(y), std::get<static_cast<int>(DRAW_QUE::ZORDER)>(y));
+	});
 
 	SetDrawScreen(DX_SCREEN_BACK);
 	ClsDrawScreen();
@@ -24,15 +28,17 @@ void SceneMng::Draw(void)
 	// ”ÍˆÍfor•¶
 	for (auto dQue : _drawList)
 	{
-		DrawRotaGraph(
-			static_cast<int>(std::get<static_cast<int>(DRAW_QUE::X)>(dQue)),
-			static_cast<int>(std::get<static_cast<int>(DRAW_QUE::Y)>(dQue)),
-			1.0,
-			std::get<static_cast<int>(DRAW_QUE::RAD)>(dQue),
-			std::get<static_cast<int>(DRAW_QUE::IMAGE)>(dQue),
-			true);
-	}
+		double x, y, rad;
+		int id;
+		LAYER layer;
 
+		// tuplu‚Ì“à—e‚ğƒoƒ‰ƒV‚Ä“ü‚ê‚ç‚ê‚é
+		std::tie(id, x, y, rad, std::ignore, layer) = dQue;
+
+		// ¡‚ÌÚ²Ô°‚É‡‚í‚¹‚Ä•`‰ææ‚ğ•Ï‚¦‚é
+		DrawRotaGraph(static_cast<int>(x), static_cast<int>(y), 1.0, rad, id, true);
+	}
+	ScreenFlip();
 	// ²ÃÚ°À°‚ğg‚Á‚½for•¶
 	// auto = std::vector<DrawQuwT>::iterator
 	//for (auto dQue = _drawList.begin(); dQue != _drawList.end(); dQue++)
@@ -52,8 +58,6 @@ void SceneMng::Draw(void)
 	//		std::get<static_cast<int>(DRAW_QUE::IMAGE)>(_drawList[i]),
 	//		true);
 	//}
-
-	ScreenFlip();
 }
 
 SceneMng::SceneMng() : ScreenSize{800,600}		// const‚É‚È‚é’¼‘O‚É’l‚ğ‰Šú‰»‚·‚é
@@ -81,7 +85,7 @@ void SceneMng::Run(void)
 	}
 }
 
-bool SceneMng::AddDrawQue(DrawQuwT dQue)
+bool SceneMng::AddDrawQue(DrawQueT dQue)
 {
 	// static_cast<·¬½Ä‚µ‚½‚¢Œ^>(·¬½Ä‚µ‚½‚¢‘ÎÛ•¨)
 	if (std::get<static_cast<int>(DRAW_QUE::IMAGE)>(dQue) <= 0)
@@ -107,8 +111,15 @@ bool SceneMng::SysInit(void)
 	}
 
 	SetDrawScreen(DX_SCREEN_BACK);						// •`‰ææ‚ğÊŞ¯¸ÊŞ¯Ì§‚Éİ’è
-	_dbgSetup(255);
-	lpImageMng.GetID("˜g", "image/frame.png");
+
+	// ì‚Á‚Ä‚ ‚ê‚Îì‚ç‚È‚¢
+	if ()
+	{
+
+	}
+
+	_dbgSetup(255);										// ÃŞÊŞ¯¸Ş—p¾¯Ä±¯Ìß
+	lpImageMng.GetID("˜g", "image/frame.png");			// ÌÚ°Ñ‰æ‘œ“o˜^
 
 	return false;
 }

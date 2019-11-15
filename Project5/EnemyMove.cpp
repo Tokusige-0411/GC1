@@ -140,22 +140,22 @@ void EnemyMove::MoveSpairal(void)
 	{
 		if (_endPos.y < _startPos.y)
 		{
-			_spaiAngl += SPAI_RAD / 150;
+			_spaiAngl += 3;
 		}
 		else
 		{
-			_spaiAngl -= SPAI_RAD / 150;
+			_spaiAngl -= 3;
 		}
 	}
 	else
 	{
 		if (_endPos.y < _startPos.y)
 		{
-			_spaiAngl -= SPAI_RAD / 150;
+			_spaiAngl -= 3;
 		}
 		else
 		{
-			_spaiAngl += SPAI_RAD / 150;
+			_spaiAngl += 3;
 		}
 	}
 	count += 3;
