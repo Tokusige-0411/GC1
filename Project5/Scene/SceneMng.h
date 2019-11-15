@@ -2,8 +2,10 @@
 #include <memory>
 #include <tuple>
 #include <vector>
+#include <map>
 #include <Vector2.h>
 #include "BeseScene.h"
+#include "LAYER_ID.h"
 
 enum class DRAW_QUE
 {
@@ -13,13 +15,6 @@ enum class DRAW_QUE
 	RAD,
 	ZORDER,		// Ú²Ô°“à‚Ì•`‰æ‡(”’l‚ª’á‚¢‚Ù‚¤‚ª‰œ)
 	LAYER		// ID‚Ì¬‚³‚¢‚à‚Ì‚ğ‰œ‚É•`‰æ
-};
-
-enum class LAYER
-{
-	BG,
-	CHAR,
-	UI
 };
 
 // •`‰æ‚·‚é‚Ì‚É•K—v‚Èî•ñ<ImageID, À•WX, À•WY, ‰æ‘œ‚Ì‰ñ“]Šp>
@@ -80,6 +75,7 @@ private:
 	void Draw(void);					// ‚·‚×‚Ä‚ğ•`‰æ‚·‚é
 
 	std::map<LAYER, int > _screenID;	// •`‰æ‚·‚é‰æ–Ê‚ğw’è‚·‚é
+
 	std::vector<DrawQueT> _drawList;	// ·­°‚Ì’Ç‰Á
 
 	SceneMng();

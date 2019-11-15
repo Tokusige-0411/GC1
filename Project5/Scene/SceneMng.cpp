@@ -21,9 +21,6 @@ void SceneMng::Draw(void)
 			< std::tie(std::get<static_cast<int>(DRAW_QUE::LAYER)>(y), std::get<static_cast<int>(DRAW_QUE::ZORDER)>(y));
 	});
 
-	SetDrawScreen(DX_SCREEN_BACK);
-	ClsDrawScreen();
-
 	// ｽﾀｯｸにたまっているQueを描画する
 	// 範囲for文
 	for (auto dQue : _drawList)
@@ -36,9 +33,24 @@ void SceneMng::Draw(void)
 		std::tie(id, x, y, rad, std::ignore, layer) = dQue;
 
 		// 今のﾚｲﾔｰに合わせて描画先を変える
+		if (_screenID[layer] != GetDrawScreen())
+		{
+			SetDrawScreen(_screenID[layer]);
+			ClsDrawScreen();
+		}
+
 		DrawRotaGraph(static_cast<int>(x), static_cast<int>(y), 1.0, rad, id, true);
 	}
+
+	//全てのﾃﾞｰﾀを書き終えたらSCREEN_BACKに描画
+	SetDrawScreen(DX_SCREEN_BACK);
+	ClsDrawScreen();
+	for (auto layer : LAYER())
+	{
+		DrawGraph(0, 0, _screenID[layer], true);
+	}
 	ScreenFlip();
+
 	// ｲﾃﾚｰﾀｰを使ったfor文
 	// auto = std::vector<DrawQuwT>::iterator
 	//for (auto dQue = _drawList.begin(); dQue != _drawList.end(); dQue++)
@@ -103,7 +115,7 @@ bool SceneMng::SysInit(void)
 {
 	// ｼｽﾃﾑ処理
 	SetWindowText("kadai5");
-	SetGraphMode(ScreenSize.x, ScreenSize.y, 16);		// 320*600ﾄﾞｯﾄ、65536色ﾓｰﾄﾞに設定
+	SetGraphMode(ScreenSize.x, ScreenSize.y, 16);		// 800*600ﾄﾞｯﾄ、65536色ﾓｰﾄﾞに設定
 	ChangeWindowMode(true);								// true:window false:ﾌﾙｽｸﾘｰﾝ
 	if (DxLib_Init() == -1)								// DXﾗｲﾌﾞﾗﾘの初期化処理
 	{
@@ -113,9 +125,12 @@ bool SceneMng::SysInit(void)
 	SetDrawScreen(DX_SCREEN_BACK);						// 描画先をﾊﾞｯｸﾊﾞｯﾌｧに設定
 
 	// 作ってあれば作らない
-	if ()
+	for (auto layer : LAYER())
 	{
-
+		if (_screenID.find(layer) == _screenID.end())
+		{
+			_screenID[layer] = MakeScreen(ScreenSize.x, ScreenSize.y, true);
+		}
 	}
 
 	_dbgSetup(255);										// ﾃﾞﾊﾞｯｸﾞ用ｾｯﾄｱｯﾌﾟ
