@@ -7,6 +7,15 @@
 #include <Enemy.h>
 #include "SceneMng.h"
 
+vector2Int firstPos[6] = {
+	{ -15, 15 },
+	{ lpSceneMng.GameScreenSize.x + 15, 15 },
+	{ -15, (lpSceneMng.GameScreenSize.y - 32) / 2 },
+	{ lpSceneMng.GameScreenSize.x + 15,  (lpSceneMng.GameScreenSize.y - 32) / 2 },
+	{ -15, lpSceneMng.GameScreenSize.y - 48 },
+	{ lpSceneMng.GameScreenSize.x + 15, lpSceneMng.GameScreenSize.y - 48},
+};
+
 GameScene::GameScene()
 {
 	lpImageMng.GetID("·¬×",		"image/char.png",		{ 30, 32 },		{ 10, 10 });
@@ -30,21 +39,24 @@ GameScene::GameScene()
 			//tmpMoveState.emplace_back(MOVE_TYPE::WAIT, vector2Dbl{ 0.0 , 0.0 });
 			tmpMoveState.emplace_back(
 									   MOVE_TYPE::SIGMOID, 
-									   vector2Dbl{ 400.0 - ((static_cast<double>(lpSceneMng.ScreenSize.x) * 1 / 5) * (((y * 10 + x) % 2) * 2 - 1)) , 
-									  (static_cast<double>(lpSceneMng.ScreenSize.y) * 4 / 7) + ((static_cast<double>(lpSceneMng.ScreenSize.y) * 1 / 7) * (((y * 10 + x) % 6 / 4) * -2 + 1))}
+									   vector2Dbl{ (lpSceneMng.GameScreenSize.x / 2) - ((static_cast<double>(lpSceneMng.GameScreenSize.x) * 1 / 5) * (((y * 10 + x) % 2) * 2 - 1)) ,
+									  (static_cast<double>(lpSceneMng.GameScreenSize.y) * 5 / 7) + ((static_cast<double>(lpSceneMng.GameScreenSize.y) * 1 / 7) * (((y * 10 + x) % 6 / 4) * -2 + 1))}
 									  );
 			tmpMoveState.emplace_back(
 									   MOVE_TYPE::SPIRAL, 
-									   vector2Dbl{ 400.0 - ((static_cast<double>(lpSceneMng.ScreenSize.x) * 1 / 5) * (((y * 10 + x) % 2) * 2 - 1)) ,
-									   static_cast<double>(lpSceneMng.ScreenSize.y) * 4 / 7 }
+									   vector2Dbl{ (lpSceneMng.GameScreenSize.x / 2) - ((static_cast<double>(lpSceneMng.GameScreenSize.x) * 1 / 5) * (((y * 10 + x) % 2) * 2 - 1)) ,
+									   static_cast<double>(lpSceneMng.GameScreenSize.y) * 5 / 7 }
 									  );
-			tmpMoveState.emplace_back(MOVE_TYPE::PITIN, vector2Dbl{ static_cast<double>(35 * 7 + 32 * x), static_cast<double>(30 + y * 40) });
+			tmpMoveState.emplace_back(MOVE_TYPE::PITIN, vector2Dbl{ static_cast<double>(35 * 3 + 32 * x), static_cast<double>(25 + y * 40) });
 			tmpMoveState.emplace_back(MOVE_TYPE::LR, vector2Dbl{ 180.0, 0.0 });
-			EnemyState enState = { ENEMY_TYPE::A,
-								   { static_cast<double>((x % 2) * 800), static_cast<double>((y * 10 + x) % 6 / 2) * 300}, 
-								   { 30, 32 } ,
-								   tmpMoveState,
-								 };
+
+			EnemyState enState = { 
+				ENEMY_TYPE::A,
+				{ static_cast<double>(firstPos[(y * 10 + x) % 6].x), static_cast<double>(firstPos[(y * 10 + x) % 6].y)},
+				{ 30, 32 } ,
+				tmpMoveState,
+			};
+
 			_objList.emplace_back(new Enemy(enState));
 		}
 	}

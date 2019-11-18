@@ -47,7 +47,7 @@ void SceneMng::Draw(void)
 	ClsDrawScreen();
 	for (auto layer : LAYER())
 	{
-		DrawGraph(0, 0, _screenID[layer], true);
+		DrawRotaGraph(ScreenCenter.x, ScreenCenter.y, 1.0, 0.0, _screenID[layer], true);
 	}
 	ScreenFlip();
 
@@ -72,7 +72,12 @@ void SceneMng::Draw(void)
 	//}
 }
 
-SceneMng::SceneMng() : ScreenSize{800,600}		// constになる直前に値を初期化する
+SceneMng::SceneMng() : 
+	// constになる直前に値を初期化する
+	ScreenSize{ 800,600 }, 
+	GameScreenSize{ 500,390 }, 
+	ScreenCenter{ ScreenSize / 2 }, 
+	GameScreenOffset{ (ScreenSize - GameScreenSize) / 2 }
 {
 }
 

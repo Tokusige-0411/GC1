@@ -2,10 +2,6 @@
 #include "BeseScene.h"
 #include "Obj.h"
 
-#define GAME_SCREEN_X 30
-#define GAME_SCREEN_Y (32 * 7)
-
-
 class GameScene :
 	public BaseScene
 {

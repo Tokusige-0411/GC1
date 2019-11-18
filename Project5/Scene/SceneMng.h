@@ -67,6 +67,9 @@ public:
 
 	// -------------ïœêî
 	const vector2Int ScreenSize;		// Ω∏ÿ∞›ª≤ΩﬁX,Y
+	const vector2Int ScreenCenter;
+	const vector2Int GameScreenSize;
+	const vector2Int GameScreenOffset;
 
 private:
 	static SceneMng* sInstance;

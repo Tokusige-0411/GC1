@@ -14,6 +14,7 @@ EnemyMove::EnemyMove(vector2Dbl& pos, double & rad) : _pos(pos), _rad(rad)
 	_aimCnt = -1;
 	_sigCount = -5.0;
 	_spaiAngl = 90.0;
+	_LRSpeed = 3.0;
 }
 
 EnemyMove::~EnemyMove()
@@ -27,7 +28,7 @@ void EnemyMove::Update(void)
 	{
 		(this->*_move)();
 	}
-	_dbgDrawPixel(_pos.x, _pos.y, 0xffffff);
+	_dbgDrawPixel(static_cast<int>(_pos.x + lpSceneMng.GameScreenOffset.x), static_cast<int>(_pos.y + lpSceneMng.GameScreenOffset.y), 0xffffff);
 }
 
 bool EnemyMove::SetMoveState(MoveState & state, bool newFlag)
@@ -136,7 +137,7 @@ void EnemyMove::MoveSpairal(void)
 	// •`‰æ•ûŒü‚ðŒˆ’è
 	_rad = (atan2(_pos.y - oldPos.y, _pos.x - oldPos.x) + pi / 2);;
 
-	if (_startPos.x < lpSceneMng.ScreenSize.x/2)
+	if (_startPos.x < lpSceneMng.GameScreenSize.x/2)
 	{
 		if (_endPos.y < _startPos.y)
 		{

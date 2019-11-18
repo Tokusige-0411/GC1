@@ -42,6 +42,7 @@ private:
 	double _sigCount;			// ｼｸﾞﾓｲﾄﾞ関数のｶｳﾝﾄ
 	double _spaiRad;			// 回転で使う中心からの半径
 	double _spaiAngl;			// 回転で使う中心の角度
+	double _LRSpeed;			// LRでの移動量
 
 	vector2Dbl _oneMoveVec;		// 1ﾌﾚｰﾑ当たりの移動量
 };
