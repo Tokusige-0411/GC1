@@ -1,5 +1,6 @@
 #pragma once
 
+// add‚µ–Y‚ê
 enum class LAYER
 {
 	BG,
