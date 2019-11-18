@@ -14,7 +14,7 @@ EnemyMove::EnemyMove(vector2Dbl& pos, double & rad) : _pos(pos), _rad(rad)
 	_aimCnt = -1;
 	_sigCount = -5.0;
 	_spaiAngl = 90.0;
-	_LRSpeed = 3.0;
+	_LRSpeed = 2.0;
 }
 
 EnemyMove::~EnemyMove()
@@ -90,6 +90,7 @@ void EnemyMove::SetMovePrg(void)
 		break;
 	case MOVE_TYPE::LR:
 		_move = &EnemyMove::MoveLR;
+		count = 0;
 		break;
 	default:
 		AST();
@@ -204,5 +205,5 @@ void EnemyMove::Wait(void)
 
 void EnemyMove::MoveLR(void)
 {
-
+	_pos.x = _endPos.x + ((lpSceneMng.gameCount % 120) - (lpSceneMng.gameCount / 60 % 2));
 }

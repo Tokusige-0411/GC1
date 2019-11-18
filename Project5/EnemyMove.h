@@ -39,6 +39,7 @@ private:
 	vector2Dbl _endPos;			// 各移動関数のｴﾝﾄﾞ位置
 	vector2Dbl& _pos;			// EnemyMove上で使う座標
 	double& _rad;				// 表示角度
+	int _gameCount;
 	double _sigCount;			// ｼｸﾞﾓｲﾄﾞ関数のｶｳﾝﾄ
 	double _spaiRad;			// 回転で使う中心からの半径
 	double _spaiAngl;			// 回転で使う中心の角度

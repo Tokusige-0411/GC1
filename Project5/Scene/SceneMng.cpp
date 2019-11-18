@@ -99,6 +99,7 @@ void SceneMng::Run(void)
 		// Š—LŒ ‚ğ“n‚·(ºËß°‚ğì‚ç‚È‚¢)
 		_activeScene = (*_activeScene).Update(std::move(_activeScene));
 		Draw();
+		gameCount++;
 	}
 }
 

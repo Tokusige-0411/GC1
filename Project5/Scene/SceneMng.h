@@ -71,6 +71,8 @@ public:
 	const vector2Int GameScreenSize;
 	const vector2Int GameScreenOffset;
 
+	int gameCount;						// ¹Ş°Ñ‘S‘Ì‚Ì¶³İÄ”
+
 private:
 	static SceneMng* sInstance;
 	unique_Base _activeScene;

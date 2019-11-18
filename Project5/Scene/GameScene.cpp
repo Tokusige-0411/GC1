@@ -48,7 +48,7 @@ GameScene::GameScene()
 									   static_cast<double>(lpSceneMng.GameScreenSize.y) * 5 / 7 }
 									  );
 			tmpMoveState.emplace_back(MOVE_TYPE::PITIN, vector2Dbl{ static_cast<double>(35 * 3 + 32 * x), static_cast<double>(25 + y * 40) });
-			tmpMoveState.emplace_back(MOVE_TYPE::LR, vector2Dbl{ 180.0, 0.0 });
+			tmpMoveState.emplace_back(MOVE_TYPE::LR, vector2Dbl{ static_cast<double>(35 * 3 + 32 * x), static_cast<double>(25 + y * 40) });
 
 			EnemyState enState = { 
 				ENEMY_TYPE::A,
