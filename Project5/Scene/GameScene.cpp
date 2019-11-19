@@ -35,8 +35,8 @@ GameScene::GameScene()
 		for (int x = 0; x < 10; x++)
 		{
 			MoveState tmpMoveState;
-			tmpMoveState.emplace_back(MOVE_TYPE::WAIT, vector2Dbl{ 30.0 * (y * 10 + x) , 0.0 });
-			//tmpMoveState.emplace_back(MOVE_TYPE::WAIT, vector2Dbl{ 0.0 , 0.0 });
+			//tmpMoveState.emplace_back(MOVE_TYPE::WAIT, vector2Dbl{ 30.0 * (y * 10 + x) , 0.0 });
+			tmpMoveState.emplace_back(MOVE_TYPE::WAIT, vector2Dbl{ 0.0 , 0.0 });
 			tmpMoveState.emplace_back(
 									   MOVE_TYPE::SIGMOID, 
 									   vector2Dbl{ (lpSceneMng.GameScreenSize.x / 2) - ((static_cast<double>(lpSceneMng.GameScreenSize.x) * 1 / 5) * (((y * 10 + x) % 2) * 2 - 1)) ,
@@ -49,6 +49,7 @@ GameScene::GameScene()
 									  );
 			tmpMoveState.emplace_back(MOVE_TYPE::PITIN, vector2Dbl{ static_cast<double>(35 * 3 + 32 * x), static_cast<double>(25 + y * 40) });
 			tmpMoveState.emplace_back(MOVE_TYPE::LR, vector2Dbl{ static_cast<double>(35 * 3 + 32 * x), static_cast<double>(25 + y * 40) });
+			tmpMoveState.emplace_back(MOVE_TYPE::EXRATE, vector2Dbl{ static_cast<double>(((35 * 3 + 32 * 0) + (35 * 3 + 32 * 9))) / 2,  static_cast<double>(((25 + 0 * 40) + (25 + 4 * 40)) / 2) });
 
 			EnemyState enState = { 
 				ENEMY_TYPE::A,

@@ -86,11 +86,15 @@ void EnemyMove::SetMovePrg(void)
 		break;
 	case MOVE_TYPE::PITIN:
 		_move = &EnemyMove::PitIn;
-		_oneMoveVec = ((_endPos - _startPos) / 90.0);			// 移動時間が120ﾌﾚｰﾑになるように
+		_endPos.x += (((lpSceneMng.gameCount + 90) % 180 - 45) - (((lpSceneMng.gameCount + 90) % 90 * 2) * ((lpSceneMng.gameCount + 90) / 90 % 2)));
+		_oneMoveVec = _endPos - _startPos;			// 移動時間が120ﾌﾚｰﾑになるように
 		break;
 	case MOVE_TYPE::LR:
 		_move = &EnemyMove::MoveLR;
 		count = 0;
+		break;
+	case MOVE_TYPE::EXRATE:
+		_move = &EnemyMove::ExRate;
 		break;
 	default:
 		AST();
@@ -177,7 +181,7 @@ void EnemyMove::PitIn(void)
 	vector2Dbl _lenght;
 
 	// ｴﾝﾄﾞの位置に来たらLRに移るようにする
-	if (abs(_endPos.x - _pos.x) >= abs(_oneMoveVec.x))
+	if (abs(_endPos.x - _pos.x) >= abs(_lenght.x))
 	{
 		// 移動
 		_pos += _oneMoveVec;
@@ -205,5 +209,14 @@ void EnemyMove::Wait(void)
 
 void EnemyMove::MoveLR(void)
 {
-	_pos.x = _endPos.x + ((lpSceneMng.gameCount % 120) - (lpSceneMng.gameCount / 60 % 2));
+	_pos.x = _endPos.x + ((lpSceneMng.gameCount % 180 - 45) - ((lpSceneMng.gameCount % 90 * 2) * (lpSceneMng.gameCount / 90 % 2)));
+	// 全員がpitin終了なおかつ既定の位置に到達したら
+	if (_pos == _endPos)
+	{
+		SetMovePrg();
+	}
+}
+
+void EnemyMove::ExRate(void)
+{
 }

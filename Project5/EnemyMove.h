@@ -8,7 +8,8 @@ enum class MOVE_TYPE
 	SIGMOID,		// 几抻嬋慄
 	SPIRAL,			// 夞揮
 	PITIN,			// 罐把奐巒埵抲
-	LR				// 嵍塃堏摦
+	LR,				// 嵍塃堏摦
+	EXRATE,			// 奼戝弅彫
 };
 
 // <摦偒偺庬椶, 摦偒偺栚昗抧揰>
@@ -29,6 +30,7 @@ private:
 	void PitIn(void);					// 罐把奐巒埵抲傊
 	void Wait(void);					// 摦偒傪巭傔傞
 	void MoveLR(void);					// 罐把拞偺嵍塃堏摦
+	void ExRate(void);					// 奼戝弅彫
 
 	int count;
 
