@@ -35,21 +35,21 @@ GameScene::GameScene()
 		for (int x = 0; x < 10; x++)
 		{
 			MoveState tmpMoveState;
-			//tmpMoveState.emplace_back(MOVE_TYPE::WAIT, vector2Dbl{ 30.0 * (y * 10 + x) , 0.0 });
-			tmpMoveState.emplace_back(MOVE_TYPE::WAIT, vector2Dbl{ 0.0 , 0.0 });
-			tmpMoveState.emplace_back(
-									   MOVE_TYPE::SIGMOID, 
-									   vector2Dbl{ (lpSceneMng.GameScreenSize.x / 2) - ((static_cast<double>(lpSceneMng.GameScreenSize.x) * 1 / 5) * (((y * 10 + x) % 2) * 2 - 1)) ,
-									  (static_cast<double>(lpSceneMng.GameScreenSize.y) * 5 / 7) + ((static_cast<double>(lpSceneMng.GameScreenSize.y) * 1 / 7) * (((y * 10 + x) % 6 / 4) * -2 + 1))}
-									  );
-			tmpMoveState.emplace_back(
-									   MOVE_TYPE::SPIRAL, 
-									   vector2Dbl{ (lpSceneMng.GameScreenSize.x / 2) - ((static_cast<double>(lpSceneMng.GameScreenSize.x) * 1 / 5) * (((y * 10 + x) % 2) * 2 - 1)) ,
-									   static_cast<double>(lpSceneMng.GameScreenSize.y) * 5 / 7 }
-									  );
-			tmpMoveState.emplace_back(MOVE_TYPE::PITIN, vector2Dbl{ static_cast<double>(35 * 3 + 32 * x), static_cast<double>(25 + y * 40) });
-			tmpMoveState.emplace_back(MOVE_TYPE::LR, vector2Dbl{ static_cast<double>(35 * 3 + 32 * x), static_cast<double>(25 + y * 40) });
-			tmpMoveState.emplace_back(MOVE_TYPE::EXRATE, vector2Dbl{ static_cast<double>(((35 * 3 + 32 * 0) + (35 * 3 + 32 * 9))) / 2,  static_cast<double>(((25 + 0 * 40) + (25 + 4 * 40)) / 2) });
+			tmpMoveState.emplace_back(MOVE_TYPE::WAIT, vector2Dbl{ 10.0 * (y * 10 + x) , 0.0 });
+			//tmpMoveState.emplace_back(MOVE_TYPE::WAIT, vector2Dbl{ 0.0 , 0.0 });
+			//tmpMoveState.emplace_back(
+			//						   MOVE_TYPE::SIGMOID, 
+			//						   vector2Dbl{ (lpSceneMng.GameScreenSize.x / 2) - ((static_cast<double>(lpSceneMng.GameScreenSize.x) * 1 / 5) * (((y * 10 + x) % 2) * 2 - 1)) ,
+			//						  (static_cast<double>(lpSceneMng.GameScreenSize.y) * 5 / 7) + ((static_cast<double>(lpSceneMng.GameScreenSize.y) * 1 / 7) * (((y * 10 + x) % 6 / 4) * -2 + 1))}
+			//						  );
+			//tmpMoveState.emplace_back(
+			//						   MOVE_TYPE::SPIRAL, 
+			//						   vector2Dbl{ (lpSceneMng.GameScreenSize.x / 2) - ((static_cast<double>(lpSceneMng.GameScreenSize.x) * 1 / 5) * (((y * 10 + x) % 2) * 2 - 1)) ,
+			//						   static_cast<double>(lpSceneMng.GameScreenSize.y) * 5 / 7 }
+			//						  );
+			tmpMoveState.emplace_back(MOVE_TYPE::PITIN, vector2Dbl{ static_cast<double>(35 * 3 + 32 * x), static_cast<double>(35 + y * 40) });
+			tmpMoveState.emplace_back(MOVE_TYPE::LR, vector2Dbl{ static_cast<double>(35 * 3 + 32 * x), static_cast<double>(35 + y * 40) });
+			tmpMoveState.emplace_back(MOVE_TYPE::EXRATE, vector2Dbl{ static_cast<double>(((35 * 3 + 32 * 0) + (35 * 3 + 32 * 9))) / 2,  static_cast<double>(((35 + 0 * 40) + (35 + 4 * 40)) / 2) });
 
 			EnemyState enState = { 
 				ENEMY_TYPE::A,

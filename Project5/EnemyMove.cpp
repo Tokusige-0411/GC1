@@ -4,9 +4,12 @@
 #include "EnemyMove.h"
 #include <Vector2.h>
 #include "Scene\SceneMng.h"
-		
+	
+int EnemyMove::_pitInCnt = 0;
+
 #define SPAI_RAD 540.0		// ‰ñ“]‚³‚¹‚½‚¢Šp“x
 #define pi 3.14159			// ‰~Žü—¦
+#define MAX_COUNT 50
 
 EnemyMove::EnemyMove(vector2Dbl& pos, double & rad) : _pos(pos), _rad(rad)
 {
@@ -87,14 +90,16 @@ void EnemyMove::SetMovePrg(void)
 	case MOVE_TYPE::PITIN:
 		_move = &EnemyMove::PitIn;
 		_endPos.x += (((lpSceneMng.gameCount + 90) % 180 - 45) - (((lpSceneMng.gameCount + 90) % 90 * 2) * ((lpSceneMng.gameCount + 90) / 90 % 2)));
-		_oneMoveVec = _endPos - _startPos;			// ˆÚ“®ŽžŠÔ‚ª120ÌÚ°Ñ‚É‚È‚é‚æ‚¤‚É
+		_oneMoveVec = (_endPos - _startPos) / 90.0;;			// ˆÚ“®ŽžŠÔ‚ª120ÌÚ°Ñ‚É‚È‚é‚æ‚¤‚É
 		break;
 	case MOVE_TYPE::LR:
 		_move = &EnemyMove::MoveLR;
 		count = 0;
+		_pitInCnt++;
 		break;
 	case MOVE_TYPE::EXRATE:
 		_move = &EnemyMove::ExRate;
+		_lenght = _endPos - _pos;
 		break;
 	default:
 		AST();
@@ -178,17 +183,17 @@ void EnemyMove::MoveSpairal(void)
 void EnemyMove::PitIn(void)
 {
 	// _stratPos‚Æ_endPos‚ðŽg‚Á‚ÄˆÚ“®‚³‚¹‚é
-	vector2Dbl _lenght;
+	vector2Dbl lenght;
 
 	// ´ÝÄÞ‚ÌˆÊ’u‚É—ˆ‚½‚çLR‚ÉˆÚ‚é‚æ‚¤‚É‚·‚é
-	if (abs(_endPos.x - _pos.x) >= abs(_lenght.x))
+	if (abs(_endPos.x - _pos.x) >= abs(_oneMoveVec.x))
 	{
 		// ˆÚ“®
 		_pos += _oneMoveVec;
 
 		// Šp“x‚Ìˆ—
-		_lenght = _endPos - _pos;
-		_rad = (atan2(_lenght.y, _lenght.x) + pi / 2);
+		lenght = _endPos - _pos;
+		_rad = (atan2(lenght.y, lenght.x) + pi / 2);
 	}
 	else
 	{
@@ -211,12 +216,15 @@ void EnemyMove::MoveLR(void)
 {
 	_pos.x = _endPos.x + ((lpSceneMng.gameCount % 180 - 45) - ((lpSceneMng.gameCount % 90 * 2) * (lpSceneMng.gameCount / 90 % 2)));
 	// ‘Sˆõ‚ªpitinI—¹‚È‚¨‚©‚ÂŠù’è‚ÌˆÊ’u‚É“ž’B‚µ‚½‚ç
-	if (_pos == _endPos)
+	if ((_pos == _endPos) && _pitInCnt >= MAX_COUNT)
 	{
+		_pos = _endPos;
 		SetMovePrg();
 	}
 }
 
 void EnemyMove::ExRate(void)
 {
+	_pos = _endPos + (_lenght * (static_cast<double>(((100 + (count % 60 - ((count % 30 * 2) * (count / 30 % 2))))) / 100.0)));
+	count++;
 }

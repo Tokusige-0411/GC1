@@ -20,8 +20,9 @@ class EnemyMove
 public:
 	EnemyMove(vector2Dbl& pos, double & rad);								// 座標を入れる
 	~EnemyMove();
-	void Update(void);										// いろいろ更新
-	bool SetMoveState(MoveState& state, bool newFlag);		// 関数ﾎﾟｲﾝﾀに設定する
+	void Update(void);														// いろいろ更新
+	bool SetMoveState(MoveState& state, bool newFlag);						// 関数ﾎﾟｲﾝﾀに設定する
+
 private:
 	void SetMovePrg(void);				// 動きの関数を設定する
 	void (EnemyMove::*_move)(void);		// 関数ﾎﾟｲﾝﾀ(動きの設定)
@@ -32,7 +33,7 @@ private:
 	void MoveLR(void);					// ｹﾞｰﾑ中の左右移動
 	void ExRate(void);					// 拡大縮小
 
-	int count;
+	int count;							// 動きで使うｶｳﾝﾀｰ
 
 	MoveState _aimState;				// 動きのｽﾃｰﾀｽ
 	int _aimCnt;						// 動きｽﾃｰﾀｽのｶｳﾝﾄ
@@ -41,12 +42,14 @@ private:
 	vector2Dbl _endPos;			// 各移動関数のｴﾝﾄﾞ位置
 	vector2Dbl& _pos;			// EnemyMove上で使う座標
 	double& _rad;				// 表示角度
-	int _gameCount;
 	double _sigCount;			// ｼｸﾞﾓｲﾄﾞ関数のｶｳﾝﾄ
 	double _spaiRad;			// 回転で使う中心からの半径
 	double _spaiAngl;			// 回転で使う中心の角度
 	double _LRSpeed;			// LRでの移動量
 
+	static int _pitInCnt;		// ﾋﾟｯﾄｲﾝしたものをｶｳﾝﾄする
+
 	vector2Dbl _oneMoveVec;		// 1ﾌﾚｰﾑ当たりの移動量
+	vector2Dbl _lenght;			// _endPosと_posの距離
 };
 
