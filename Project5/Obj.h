@@ -38,6 +38,9 @@ public:
 	bool isDead(void) { return _dead; }						// €–SÌ×¸Ş‚ğ•Ô‚·
 	bool isAnimEnd(void);
 
+	// QÆ‚³‚¹‚½‚¢pos state size‚Ìget‚ğ‚Â‚­‚é
+	const vector2Dbl& pos(void);
+
 private:
 	std::map<STATE, AnimVector> _animMap;			// ±ÆÒ°¼®İî•ñ‚ğ•Û‘¶‚·‚éÏ¯Ìß
 	STATE _state;									// ¡‚Ìó‘Ô

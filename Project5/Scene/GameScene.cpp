@@ -5,6 +5,7 @@
 #include <imageMng.h>
 #include <Player.h>
 #include <Enemy.h>
+#include <Bullet.h>
 #include "SceneMng.h"
 
 vector2Int firstPos[6] = {
@@ -18,13 +19,13 @@ vector2Int firstPos[6] = {
 
 GameScene::GameScene()
 {
-	lpImageMng.GetID("·¬×",		"image/char.png",		{ 30, 32 },		{ 10, 10 });
-	lpImageMng.GetID("’e",		"image/shot.png",		{ 8,3 },		{ 1,2 });
-	lpImageMng.GetID("“G”š”­",	"image/en_blast.png",	{ 64,64 },		{ 5, 1 });
-	lpImageMng.GetID("PL”š”­",	"image/pl_blast.png",	{ 64,64 },		{ 4,1 });
+	lpImageMng.GetID("·¬×", "image/char.png", { 30, 32 }, { 10, 10 });
+	lpImageMng.GetID("’e", "image/shot.png", { 8,3 }, { 1,2 });
+	lpImageMng.GetID("“G”š”­", "image/en_blast.png", { 64,64 }, { 5, 1 });
+	lpImageMng.GetID("PL”š”­", "image/pl_blast.png", { 64,64 }, { 4,1 });
 
 	_objList.emplace_back(
-		new Player({ 0, 0 }, { 0, 0 })
+		new Player({ static_cast<double>(lpSceneMng.GameScreenSize.x / 2), static_cast<double>(lpSceneMng.GameScreenSize.y - 16) }, { 0, 0 })
 	);
 
 	int posCnt;
@@ -35,23 +36,23 @@ GameScene::GameScene()
 		for (int x = 0; x < 10; x++)
 		{
 			MoveState tmpMoveState;
-			tmpMoveState.emplace_back(MOVE_TYPE::WAIT, vector2Dbl{ 10.0 * (y * 10 + x) , 0.0 });
+			tmpMoveState.emplace_back(MOVE_TYPE::WAIT, vector2Dbl{ 30.0 * (y * 10 + x) , 0.0 });
 			//tmpMoveState.emplace_back(MOVE_TYPE::WAIT, vector2Dbl{ 0.0 , 0.0 });
-			//tmpMoveState.emplace_back(
-			//						   MOVE_TYPE::SIGMOID, 
-			//						   vector2Dbl{ (lpSceneMng.GameScreenSize.x / 2) - ((static_cast<double>(lpSceneMng.GameScreenSize.x) * 1 / 5) * (((y * 10 + x) % 2) * 2 - 1)) ,
-			//						  (static_cast<double>(lpSceneMng.GameScreenSize.y) * 5 / 7) + ((static_cast<double>(lpSceneMng.GameScreenSize.y) * 1 / 7) * (((y * 10 + x) % 6 / 4) * -2 + 1))}
-			//						  );
-			//tmpMoveState.emplace_back(
-			//						   MOVE_TYPE::SPIRAL, 
-			//						   vector2Dbl{ (lpSceneMng.GameScreenSize.x / 2) - ((static_cast<double>(lpSceneMng.GameScreenSize.x) * 1 / 5) * (((y * 10 + x) % 2) * 2 - 1)) ,
-			//						   static_cast<double>(lpSceneMng.GameScreenSize.y) * 5 / 7 }
-			//						  );
+			tmpMoveState.emplace_back(
+				MOVE_TYPE::SIGMOID,
+				vector2Dbl{ (lpSceneMng.GameScreenSize.x / 2) - ((static_cast<double>(lpSceneMng.GameScreenSize.x) * 1 / 5) * (((y * 10 + x) % 2) * 2 - 1)) ,
+			   (static_cast<double>(lpSceneMng.GameScreenSize.y) * 5 / 7) + ((static_cast<double>(lpSceneMng.GameScreenSize.y) * 1 / 7) * (((y * 10 + x) % 6 / 4) * -2 + 1)) }
+			);
+			tmpMoveState.emplace_back(
+				MOVE_TYPE::SPIRAL,
+				vector2Dbl{ (lpSceneMng.GameScreenSize.x / 2) - ((static_cast<double>(lpSceneMng.GameScreenSize.x) * 1 / 5) * (((y * 10 + x) % 2) * 2 - 1)) ,
+				static_cast<double>(lpSceneMng.GameScreenSize.y) * 5 / 7 }
+			);
 			tmpMoveState.emplace_back(MOVE_TYPE::PITIN, vector2Dbl{ static_cast<double>(35 * 3 + 32 * x), static_cast<double>(35 + y * 40) });
 			tmpMoveState.emplace_back(MOVE_TYPE::LR, vector2Dbl{ static_cast<double>(35 * 3 + 32 * x), static_cast<double>(35 + y * 40) });
 			tmpMoveState.emplace_back(MOVE_TYPE::EXRATE, vector2Dbl{ static_cast<double>(((35 * 3 + 32 * 0) + (35 * 3 + 32 * 9))) / 2,  static_cast<double>(((35 + 0 * 40) + (35 + 4 * 40)) / 2) });
 
-			EnemyState enState = { 
+			EnemyState enState = {
 				ENEMY_TYPE::A,
 				{ static_cast<double>(firstPos[(y * 10 + x) % 6].x), static_cast<double>(firstPos[(y * 10 + x) % 6].y)},
 				{ 30, 32 } ,
@@ -113,4 +114,22 @@ unique_Base GameScene::Update(unique_Base own)
 	//{
 	//	obj[i]->Draw();
 	//}
+}
+
+void GameScene::RunActQue(std::vector<ActQueT> actList)
+{
+	for (auto data : actList)
+	{
+		switch (data.first)
+		{
+		case ACT_QUE::NON:
+			break;
+		case ACT_QUE::SHOT:
+			_objList.emplace_back(new Bullet(data.second.pos()));
+			break;
+		default:
+			AST();
+			break;
+		}
+	}
 }

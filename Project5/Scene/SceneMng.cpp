@@ -98,6 +98,7 @@ void SceneMng::Run(void)
 		// [(*_activeScene).] = [_activeScene->]
 		// Š—LŒ ‚ğ“n‚·(ºËß°‚ğì‚ç‚È‚¢)
 		_activeScene = (*_activeScene).Update(std::move(_activeScene));
+		(*_activeScene).RunActQue(std::move(_actList));
 		Draw();
 		gameCount++;
 	}
@@ -114,6 +115,12 @@ bool SceneMng::AddDrawQue(DrawQueT dQue)
 	// Que‚ğ’Ç‰Á
 	//_drawList.push_back();
 	_drawList.emplace_back(dQue);
+	return true;
+}
+
+bool SceneMng::AddActQue(ActQueT aQue)
+{
+	_actList.emplace_back(aQue);
 	return true;
 }
 

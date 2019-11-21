@@ -88,6 +88,11 @@ bool Obj::isAnimEnd(void)
 	}
 }
 
+const vector2Dbl & Obj::pos(void)
+{
+	return _pos;
+}
+
 bool Obj::DestroyPrpc(void)
 {
 	if (_alive)

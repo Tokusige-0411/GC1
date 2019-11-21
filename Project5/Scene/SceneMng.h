@@ -64,6 +64,7 @@ public:
 	// std::tuple<int, int, int> 
 
 	bool AddDrawQue(DrawQueT dQue);		// ·­°‚Ì’Ç‰Á
+	bool AddActQue(ActQueT aQue);
 
 	// -------------•Ï”
 	const vector2Int ScreenSize;		// ½¸Ø°İ»²½ŞX,Y
@@ -82,6 +83,7 @@ private:
 	std::map<LAYER, int > _screenID;	// •`‰æ‚·‚é‰æ–Ê‚ğw’è‚·‚é
 
 	std::vector<DrawQueT> _drawList;	// ·­°‚Ì’Ç‰Á
+	std::vector<ActQueT> _actList;
 
 	SceneMng();
 	~SceneMng();

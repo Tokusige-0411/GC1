@@ -1,7 +1,9 @@
 #include <DxLib.h>
 #include <imageMng.h>
+#include <BeseScene.h>
 #include "Player.h"
 #include <KeyState.h>
+#include <SceneMng.h>
 
 Player::Player()
 {
@@ -41,6 +43,11 @@ void Player::Update(void)
 	move(_input, INPUT_ID::RIGHT,	_pos.x,		 2);
 	move(_input, INPUT_ID::UP,		_pos.y,		-2);
 	move(_input, INPUT_ID::DOWN,	_pos.y,		 2);
+
+	if ((*_input).state(INPUT_ID::BTN_1).first)
+	{
+		lpSceneMng.AddActQue({ ACT_QUE::SHOT, *this });
+	}
 }
 
 Player::~Player()

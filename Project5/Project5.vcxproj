@@ -70,7 +70,7 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <IncludePath>$(DX_LIB);$(SolutionDir);$(SolutionDir)\_debug;$(SolutionDir)\common;$(SolutionDir)\Input;$(IncludePath)</IncludePath>
+    <IncludePath>$(DX_LIB);$(SolutionDir);$(SolutionDir)\_debug;$(SolutionDir)\common;$(SolutionDir)\Input;$(SolutionDir)\Scene;$(IncludePath)</IncludePath>
     <LibraryPath>$(DX_LIB);$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -124,6 +124,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Bullet.cpp" />
     <ClCompile Include="common\imageMng.cpp" />
     <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="EnemyMove.cpp" />
@@ -142,6 +143,7 @@
     <ClCompile Include="_debug\_DebugDispOut.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Bullet.h" />
     <ClInclude Include="common\detirlth\Vector2.h" />
     <ClInclude Include="common\imageMng.h" />
     <ClInclude Include="Enemy.h" />
