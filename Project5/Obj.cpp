@@ -94,7 +94,7 @@ const vector2Dbl & Obj::pos(void)
 }
 
 bool Obj::DestroyPrpc(void)
-{
+{	
 	if (_alive)
 	{
 		return false;

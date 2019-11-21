@@ -44,7 +44,7 @@ void Player::Update(void)
 	move(_input, INPUT_ID::UP,		_pos.y,		-2);
 	move(_input, INPUT_ID::DOWN,	_pos.y,		 2);
 
-	if ((*_input).state(INPUT_ID::BTN_1).first)
+	if ((*_input).state(INPUT_ID::BTN_1).first && !((*_input).state(INPUT_ID::BTN_1).second))
 	{
 		lpSceneMng.AddActQue({ ACT_QUE::SHOT, *this });
 	}
