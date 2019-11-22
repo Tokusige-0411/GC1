@@ -11,6 +11,7 @@ Obj::Obj()
 	_animCount = 0;
 	_rad = 0;
 	_zOrder = 0;
+	_unitID = UNIT_ID::NON;
 }
 
 Obj::~Obj()
@@ -88,9 +89,14 @@ bool Obj::isAnimEnd(void)
 	}
 }
 
-const vector2Dbl & Obj::pos(void)
+const vector2Dbl & Obj::pos(void) const
 {
 	return _pos;
+}
+
+const UNIT_ID & Obj::unitID(void) const
+{
+	return _unitID;
 }
 
 bool Obj::DestroyPrpc(void)

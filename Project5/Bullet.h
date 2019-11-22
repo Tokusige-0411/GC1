@@ -5,10 +5,11 @@ class Bullet :
 {
 public:
 	Bullet();
-	Bullet(vector2Dbl pos);
+	Bullet(UNIT_ID unitID, vector2Dbl pos);
 	~Bullet();
 	void Update(void);
 private:
+	bool DestroyPrpc(void);
 	void init(void);
 };
 

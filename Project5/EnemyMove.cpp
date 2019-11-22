@@ -225,6 +225,6 @@ void EnemyMove::MoveLR(void)
 
 void EnemyMove::ExRate(void)
 {
-	_pos = _endPos + (_lenght * (static_cast<double>(((100 + (count % 60 - ((count % 30 * 2) * (count / 30 % 2))))) / 100.0)));
+	_pos = _endPos + (_lenght * (static_cast<double>(((100 + (((count / 2) % 60) - (((count / 2) % 30 * 2) * (((count / 2) / 30) % 2))))) / 100.0)));
 	count++;
 }

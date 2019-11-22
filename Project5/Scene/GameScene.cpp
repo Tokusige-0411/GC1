@@ -7,6 +7,7 @@
 #include <Enemy.h>
 #include <Bullet.h>
 #include "SceneMng.h"
+#include <func\FuncBullet.h>
 
 vector2Int firstPos[6] = {
 	{ -15, 15 },
@@ -118,17 +119,14 @@ unique_Base GameScene::Update(unique_Base own)
 
 void GameScene::RunActQue(std::vector<ActQueT> actList)
 {
-	for (auto data : actList)
+	for (auto actData : actList)
 	{
-		switch (data.first)
+		switch (actData.first)
 		{
 		case ACT_QUE::NON:
 			break;
 		case ACT_QUE::SHOT:
-			_objList.emplace_back(new Bullet(data.second.pos()));
-			break;
-		default:
-			AST();
+			FuncBullet() (actData, _objList);
 			break;
 		}
 	}

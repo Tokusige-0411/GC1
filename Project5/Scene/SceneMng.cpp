@@ -98,6 +98,7 @@ void SceneMng::Run(void)
 		// [(*_activeScene).] = [_activeScene->]
 		// 所有権を渡す(ｺﾋﾟｰを作らない)
 		_activeScene = (*_activeScene).Update(std::move(_activeScene));
+		// 結果的にListは削除されているが、削除が必要かどうか判断するようにする
 		(*_activeScene).RunActQue(std::move(_actList));
 		Draw();
 		gameCount++;

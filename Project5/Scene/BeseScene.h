@@ -20,6 +20,7 @@ public:
 	virtual ~BaseScene();
 	virtual unique_Base Update(unique_Base own) = 0;
 	// RunActQueの仮想関数（_actListをそのまま渡す）
+	// 必ずしも全部のｼｰﾝで必要じゃないから
 	virtual void RunActQue(std::vector<ActQueT> actList);
 };
 
