@@ -50,6 +50,7 @@ public:
 
 	// QÆ‚³‚¹‚½‚¢pos state size‚Ìget‚ğ‚Â‚­‚é
 	const vector2Dbl& pos(void) const;
+	const vector2Dbl& size(void) const;
 	const UNIT_ID& unitID(void) const;
 
 private:
@@ -64,7 +65,7 @@ protected:
 	bool _alive;					// ¶‘¶Ì×¸Ş
 	bool _dead;						// €–SÌ×¸Ş
 	vector2Dbl _pos;				// •`‰æˆÊ’u
-	vector2Int _size;				// •`‰æ‚Ì»²½Ş
+	vector2Dbl _size;				// •`‰æ‚Ì»²½Ş
 	double _rad;					// Šp“x
 	int _zOrder;					// ‚Ç‚Ì‡”Ô‚Å•`‰æ‚·‚é‚©
 };

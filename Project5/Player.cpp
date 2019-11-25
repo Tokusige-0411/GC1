@@ -10,10 +10,11 @@ Player::Player()
 	init();
 }
 
-Player::Player(vector2Dbl pos, vector2Int size)
+Player::Player(vector2Dbl pos, vector2Dbl size)
 {
 	_pos = pos;
 	_size = size;
+	_unitID = UNIT_ID::PLAYER;
 	init();
 }
 

@@ -13,6 +13,7 @@ Enemy::Enemy(EnemyState & enstate)
 	_size = std::get<static_cast<int>(ENEMY_STATE::SIZE)>(enstate);
 	_type = std::get<static_cast<int>(ENEMY_STATE::TYPE)>(enstate);
 	_moveCtl.SetMoveState(std::get<static_cast<int>(ENEMY_STATE::AIM)>(enstate), true);
+	_unitID = UNIT_ID::ENEMY;
 	init();
 }
 

@@ -23,7 +23,7 @@ enum class ENEMY_STATE
 };
 
 // <“G‚ÌŽí—Þ, À•W, ‰æ‘œ‚Ì»²½Þ, “®‚«‚ÌŽí—Þ>
-using EnemyState = std::tuple<ENEMY_TYPE, vector2Dbl, vector2Int, MoveState&>;
+using EnemyState = std::tuple<ENEMY_TYPE, vector2Dbl, vector2Dbl, MoveState&>;
 
 class Enemy :
 	public Obj

@@ -10,7 +10,7 @@ Obj::Obj()
 	_animFrame = 0;
 	_animCount = 0;
 	_rad = 0;
-	_zOrder = 0;
+	_zOrder = 100;
 	_unitID = UNIT_ID::NON;
 }
 
@@ -92,6 +92,11 @@ bool Obj::isAnimEnd(void)
 const vector2Dbl & Obj::pos(void) const
 {
 	return _pos;
+}
+
+const vector2Dbl & Obj::size(void) const
+{
+	return _size;
 }
 
 const UNIT_ID & Obj::unitID(void) const

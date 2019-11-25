@@ -8,6 +8,7 @@
 #include <Bullet.h>
 #include "SceneMng.h"
 #include <func\FuncBullet.h>
+#include <func\FuncCheckHit.h>
 
 vector2Int firstPos[6] = {
 	{ -15, 15 },
@@ -20,6 +21,8 @@ vector2Int firstPos[6] = {
 
 GameScene::GameScene()
 {
+	initFunc();
+
 	lpImageMng.GetID("·¬×", "image/char.png", { 30, 32 }, { 10, 10 });
 	lpImageMng.GetID("’e", "image/shot.png", { 8,3 }, { 1,2 });
 	lpImageMng.GetID("“G”š”­", "image/en_blast.png", { 64,64 }, { 5, 1 });
@@ -28,9 +31,6 @@ GameScene::GameScene()
 	_objList.emplace_back(
 		new Player({ static_cast<double>(lpSceneMng.GameScreenSize.x / 2), static_cast<double>(lpSceneMng.GameScreenSize.y - 16) }, { 0, 0 })
 	);
-
-	int posCnt;
-	posCnt = 0;
 
 	for (int y = 0; y < 5; y++)
 	{
@@ -117,17 +117,23 @@ unique_Base GameScene::Update(unique_Base own)
 	//}
 }
 
+void GameScene::initFunc(void)
+{
+	funcQue[ACT_QUE::SHOT] = FuncBullet();
+	funcQue[ACT_QUE::CHECK_HIT] = FuncCheckHit();
+}
+
 void GameScene::RunActQue(std::vector<ActQueT> actList)
 {
 	for (auto actData : actList)
 	{
-		switch (actData.first)
+		try
 		{
-		case ACT_QUE::NON:
-			break;
-		case ACT_QUE::SHOT:
-			FuncBullet() (actData, _objList);
-			break;
+			funcQue[actData.first](actData, _objList);
+		}
+		catch(...)
+		{
+			AST();
 		}
 	}
 }

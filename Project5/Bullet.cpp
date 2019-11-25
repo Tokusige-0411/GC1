@@ -11,6 +11,7 @@ Bullet::Bullet(UNIT_ID unitID, vector2Dbl pos)
 {
 	_unitID = unitID;
 	_pos = pos;
+	_zOrder = 10;
 	_size = { 4,6 };
 	_rad = 270 * (3.141592 / 180);
 	init();
@@ -27,6 +28,9 @@ void Bullet::Update(void)
 	{
 		return;
 	}
+
+	lpSceneMng.AddActQue({ ACT_QUE::CHECK_HIT, *this });
+
 	_pos.x += cos(_rad) * 3.0;
 	_pos.y += sin(_rad) * 3.0;
 }
@@ -42,7 +46,7 @@ bool Bullet::DestroyPrpc(void)
 	{
 		return true;
 	}
-	return true;
+	return false;
 }
 
 void Bullet::init(void)
@@ -56,4 +60,6 @@ void Bullet::init(void)
 	// DxLibÇÃédólÇ…çáÇÌÇπÇƒ
 	data.emplace_back(-1, 40);
 	SetAnim(STATE::DETH, data);
+
+	state(STATE::NORMAL);
 }
