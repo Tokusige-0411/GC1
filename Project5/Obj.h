@@ -34,7 +34,7 @@ class Obj
 public:
 	// -----------ŠÖ”
 	Obj();
-	virtual void Update(void) = 0;
+	virtual void Update(sharedObj Obj) = 0;
 	void Draw(void);							// ·­°‚ğ’Ç‰Á‚·‚é
 	void Draw(int id);							// ID‚ğ“Š‚°‚Ä·­°‚ğ’Ç‰Á
 	virtual ~Obj();

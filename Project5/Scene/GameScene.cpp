@@ -83,9 +83,10 @@ GameScene::~GameScene()
 // •`‰æî•ñ‚Ì±¯ÌßÃŞ°Ä
 unique_Base GameScene::Update(unique_Base own)
 {
+	auto Obj = std::find_if(_objList.begin(), _objList.end(), [](sharedObj Obj) {return ((*Obj).unitID() == UNIT_ID::PLAYER); });
 	for (auto data : _objList)
 	{
-		(*data).Update();
+		(*data).Update(*Obj);
 	}
 	// Obj‚ÌDraw‚É±¸¾½‚µ‚Ä•`‰æ‚Ì·­°‚ğXV‚·‚é
 	for (auto data : _objList)

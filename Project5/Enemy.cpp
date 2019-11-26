@@ -17,14 +17,14 @@ Enemy::Enemy(EnemyState & enstate)
 	init();
 }
 
-void Enemy::Update(void)
+void Enemy::Update(sharedObj Obj)
 {
 	if (DestroyPrpc())
 	{
 		return;
 	}
 
-	_moveCtl.Update();
+	_moveCtl.Update(Obj);
 
 	//if (rand() % 300 == 0)
 	//{

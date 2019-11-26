@@ -117,7 +117,7 @@ bool Obj::DestroyPrpc(void)
 	return true;
 }
 
-void Obj::Update(void)
+void Obj::Update(sharedObj Obj)
 {
 
 }

@@ -4,12 +4,13 @@
 #include "EnemyMove.h"
 #include <Vector2.h>
 #include "Scene\SceneMng.h"
-	
-int EnemyMove::_pitInCnt = 0;
 
 #define SPAI_RAD 540.0		// 回転させたい角度
 #define pi 3.14159			// 円周率
 #define MAX_COUNT 50
+	
+int EnemyMove::_pitInCnt = 0;
+int EnemyMove::_maxCount = MAX_COUNT;
 
 EnemyMove::EnemyMove(vector2Dbl& pos, double & rad) : _pos(pos), _rad(rad)
 {
@@ -24,13 +25,16 @@ EnemyMove::~EnemyMove()
 {
 }
 
-void EnemyMove::Update(void)
+void EnemyMove::Update(sharedObj Obj)
 {
 	// 優先度の問題
 	if (_move != nullptr)
 	{
 		(this->*_move)();
 	}
+
+	_plPos = (*Obj).pos;			// ﾌﾟﾚｲﾔｰの座標を確保
+
 	_dbgDrawPixel(static_cast<int>(_pos.x + lpSceneMng.GameScreenOffset.x), static_cast<int>(_pos.y + lpSceneMng.GameScreenOffset.y), 0xffffff);
 }
 
@@ -90,7 +94,7 @@ void EnemyMove::SetMovePrg(void)
 	case MOVE_TYPE::PITIN:
 		_move = &EnemyMove::PitIn;
 		_endPos.x += (((lpSceneMng.gameCount + 90) % 180 - 45) - (((lpSceneMng.gameCount + 90) % 90 * 2) * ((lpSceneMng.gameCount + 90) / 90 % 2)));
-		_oneMoveVec = (_endPos - _startPos) / 90.0;;			// 移動時間が120ﾌﾚｰﾑになるように
+		_oneMoveVec = (_endPos - _startPos) / 90.0;			// 移動時間が120ﾌﾚｰﾑになるように
 		break;
 	case MOVE_TYPE::LR:
 		_move = &EnemyMove::MoveLR;
@@ -216,7 +220,7 @@ void EnemyMove::MoveLR(void)
 {
 	_pos.x = _endPos.x + ((lpSceneMng.gameCount % 180 - 45) - ((lpSceneMng.gameCount % 90 * 2) * (lpSceneMng.gameCount / 90 % 2)));
 	// 全員がpitin終了なおかつ既定の位置に到達したら
-	if ((_pos == _endPos) && _pitInCnt >= MAX_COUNT)
+	if ((_pos == _endPos) && _pitInCnt >= _maxCount)
 	{
 		_pos = _endPos;
 		SetMovePrg();
@@ -225,6 +229,11 @@ void EnemyMove::MoveLR(void)
 
 void EnemyMove::ExRate(void)
 {
-	_pos = _endPos + (_lenght * (static_cast<double>(((100 + (((count / 2) % 60) - (((count / 2) % 30 * 2) * (((count / 2) / 30) % 2))))) / 100.0)));
+	_pos = _endPos - (_lenght * (static_cast<double>(((100 + (((count / 2) % 60) - (((count / 2) % 30 * 2) * (((count / 2) / 30) % 2))))) / 100.0)));
 	count++;
+}
+
+void EnemyMove::SetMaxCount(void)
+{
+	_maxCount--;
 }

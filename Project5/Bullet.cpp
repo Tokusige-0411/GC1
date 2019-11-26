@@ -22,7 +22,7 @@ Bullet::~Bullet()
 {
 }
 
-void Bullet::Update(void)
+void Bullet::Update(sharedObj Obj)
 {
 	if (Bullet::DestroyPrpc())
 	{

@@ -20,8 +20,9 @@ class EnemyMove
 public:
 	EnemyMove(vector2Dbl& pos, double & rad);								// 座標を入れる
 	~EnemyMove();
-	void Update(void);														// いろいろ更新
+	void Update(sharedObj Obj);														// いろいろ更新
 	bool SetMoveState(MoveState& state, bool newFlag);						// 関数ﾎﾟｲﾝﾀに設定する
+	static void SetMaxCount(void);				// 敵の最大数をｶｳﾝﾄするだけ
 
 private:
 	void SetMovePrg(void);				// 動きの関数を設定する
@@ -48,8 +49,11 @@ private:
 	double _LRSpeed;			// LRでの移動量
 
 	static int _pitInCnt;		// ﾋﾟｯﾄｲﾝしたものをｶｳﾝﾄする
+	static int _maxCount;		// 敵の最大数を数える
 
 	vector2Dbl _oneMoveVec;		// 1ﾌﾚｰﾑ当たりの移動量
 	vector2Dbl _lenght;			// _endPosと_posの距離
+
+	vector2Dbl _plPos;			// ﾌﾟﾚｲﾔｰの座標
 };
 
