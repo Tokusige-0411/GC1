@@ -35,6 +35,7 @@ void Enemy::Update(sharedObj Obj)
 
 Enemy::~Enemy()
 {
+	_moveCtl.SetMaxCount();
 }
 
 void Enemy::init(void)

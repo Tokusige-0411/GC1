@@ -15,7 +15,6 @@ bool FuncCheckHit::operator()(ActQueT actData, std::vector<sharedObj>& _objList)
 			{
 				(*data).SetAlive(false);
 				actData.second.SetAlive(false);
-				EnemyMove::SetMaxCount();
 			}
 		}
 	}

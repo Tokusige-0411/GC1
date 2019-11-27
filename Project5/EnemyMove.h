@@ -1,6 +1,7 @@
 #pragma once
 #include <vector>
 #include <Vector2.h>
+#include <Obj.h>
 
 enum class MOVE_TYPE
 {
@@ -10,6 +11,7 @@ enum class MOVE_TYPE
 	PITIN,			// ｹﾞｰﾑ開始位置
 	LR,				// 左右移動
 	EXRATE,			// 拡大縮小
+	ATTACK,			// 自機へ突撃
 };
 
 // <動きの種類, 動きの目標地点>
@@ -20,9 +22,9 @@ class EnemyMove
 public:
 	EnemyMove(vector2Dbl& pos, double & rad);								// 座標を入れる
 	~EnemyMove();
-	void Update(sharedObj Obj);														// いろいろ更新
+	void Update(sharedObj Obj);												// いろいろ更新
 	bool SetMoveState(MoveState& state, bool newFlag);						// 関数ﾎﾟｲﾝﾀに設定する
-	static void SetMaxCount(void);				// 敵の最大数をｶｳﾝﾄするだけ
+	void SetMaxCount(void);				// 敵の最大数をｶｳﾝﾄするだけ
 
 private:
 	void SetMovePrg(void);				// 動きの関数を設定する
@@ -33,6 +35,7 @@ private:
 	void Wait(void);					// 動きを止める
 	void MoveLR(void);					// ｹﾞｰﾑ中の左右移動
 	void ExRate(void);					// 拡大縮小
+	void Attack(void);					// ﾌﾟﾚｲﾔｰへの突撃
 
 	int count;							// 動きで使うｶｳﾝﾀｰ
 

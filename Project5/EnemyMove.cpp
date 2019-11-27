@@ -27,13 +27,12 @@ EnemyMove::~EnemyMove()
 
 void EnemyMove::Update(sharedObj Obj)
 {
+	_plPos = (*Obj).pos();			// ﾌﾟﾚｲﾔｰの座標を確保
 	// 優先度の問題
 	if (_move != nullptr)
 	{
 		(this->*_move)();
 	}
-
-	_plPos = (*Obj).pos;			// ﾌﾟﾚｲﾔｰの座標を確保
 
 	_dbgDrawPixel(static_cast<int>(_pos.x + lpSceneMng.GameScreenOffset.x), static_cast<int>(_pos.y + lpSceneMng.GameScreenOffset.y), 0xffffff);
 }
@@ -65,7 +64,13 @@ void EnemyMove::SetMovePrg(void)
 	// ｶｳﾝﾄが回ってたら何もせず終わる
 	if (_aimCnt >= static_cast<int>(_aimState.size()))
 	{
-		return;
+		for (_aimCnt = 0; _aimCnt < static_cast<int>(_aimState.size()); _aimCnt++)
+		{
+			if (_aimState[_aimCnt].first == MOVE_TYPE::EXRATE)
+			{
+				break;
+			}
+		}
 	}
 
 	_startPos = _pos;								// 現在の座標を入れる
@@ -93,8 +98,17 @@ void EnemyMove::SetMovePrg(void)
 		break;
 	case MOVE_TYPE::PITIN:
 		_move = &EnemyMove::PitIn;
-		_endPos.x += (((lpSceneMng.gameCount + 90) % 180 - 45) - (((lpSceneMng.gameCount + 90) % 90 * 2) * ((lpSceneMng.gameCount + 90) / 90 % 2)));
-		_oneMoveVec = (_endPos - _startPos) / 90.0;			// 移動時間が120ﾌﾚｰﾑになるように
+		if (_pos.y > lpSceneMng.GameScreenSize.y)
+		{
+			_pos.y = -100.0;
+			_startPos = _pos;								// 現在の座標を入れる
+		}
+		else
+		{
+			_endPos.x += (((lpSceneMng.gameCount + 90) % 180 - 45) - (((lpSceneMng.gameCount + 90) % 90 * 2) * ((lpSceneMng.gameCount + 90) / 90 % 2)));
+		}
+		_lenght = _endPos - _startPos;			// 移動時間が120ﾌﾚｰﾑになるように
+		count = 0;
 		break;
 	case MOVE_TYPE::LR:
 		_move = &EnemyMove::MoveLR;
@@ -104,6 +118,11 @@ void EnemyMove::SetMovePrg(void)
 	case MOVE_TYPE::EXRATE:
 		_move = &EnemyMove::ExRate;
 		_lenght = _endPos - _pos;
+		count = 0;
+		break;
+	case MOVE_TYPE::ATTACK:
+		_move = &EnemyMove::Attack;
+		count = 0;
 		break;
 	default:
 		AST();
@@ -190,10 +209,10 @@ void EnemyMove::PitIn(void)
 	vector2Dbl lenght;
 
 	// ｴﾝﾄﾞの位置に来たらLRに移るようにする
-	if (abs(_endPos.x - _pos.x) >= abs(_oneMoveVec.x))
+	if (count < 90)
 	{
 		// 移動
-		_pos += _oneMoveVec;
+		_pos += _lenght / 90.0;
 
 		// 角度の処理
 		lenght = _endPos - _pos;
@@ -205,6 +224,7 @@ void EnemyMove::PitIn(void)
 		_rad = 0.0;
 		SetMovePrg();
 	}
+	count++;
 }
 
 void EnemyMove::Wait(void)
@@ -231,9 +251,38 @@ void EnemyMove::ExRate(void)
 {
 	_pos = _endPos - (_lenght * (static_cast<double>(((100 + (((count / 2) % 60) - (((count / 2) % 30 * 2) * (((count / 2) / 30) % 2))))) / 100.0)));
 	count++;
+	if (count >= 240)
+	{
+		SetMovePrg();
+	}
+}
+
+void EnemyMove::Attack(void)
+{
+	if (count < _endPos.x)
+	{
+
+	}
+	else
+	{
+		_move = &EnemyMove::PitIn;
+		_endPos.x = _plPos.x;
+		_endPos.y = _plPos.y + 100.0;
+		_lenght = _endPos - _pos;
+		count = 0;
+	}
+	count++;
 }
 
 void EnemyMove::SetMaxCount(void)
 {
-	_maxCount--;
+	if (static_cast<MOVE_TYPE>(_aimCnt) == MOVE_TYPE::PITIN)
+	{
+		_maxCount--;
+	}
+	else
+	{
+		_maxCount--;
+		_pitInCnt--;
+	}
 }
