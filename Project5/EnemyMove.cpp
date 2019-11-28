@@ -18,7 +18,6 @@ EnemyMove::EnemyMove(vector2Dbl& pos, double & rad, bool & exFlag) : _pos(pos), 
 	_aimCnt = -1;
 	_sigCount = -5.0;
 	_spaiAngl = 90.0;
-	_LRSpeed = 2.0;
 }
 
 EnemyMove::~EnemyMove()
@@ -102,6 +101,10 @@ void EnemyMove::SetMovePrg(void)
 		{
 			_pos.y = -100.0;
 			_startPos = _pos;								// åªç›ÇÃç¿ïWÇì¸ÇÍÇÈ
+			_endPos -= (_lad * 
+				(static_cast<double>((100 + (((lpSceneMng.gameCount - _rotaCnt + 90) % 60) - 
+				(((lpSceneMng.gameCount - _rotaCnt + 90) % 30 * 2) *
+				(((lpSceneMng.gameCount - _rotaCnt + 90) / 30) % 2)))) / 100.0)));
 		}
 		else
 		{
@@ -117,8 +120,8 @@ void EnemyMove::SetMovePrg(void)
 		break;
 	case MOVE_TYPE::EXRATE:
 		_move = &EnemyMove::ExRate;
-		_lenght = _endPos - _pos;
-		count = 0;
+		_lad = _endPos - _pos;
+		_rotaCnt = lpSceneMng.gameCount;
 		break;
 	case MOVE_TYPE::ATTACK:
 		_move = &EnemyMove::Attack;
@@ -249,7 +252,7 @@ void EnemyMove::MoveLR(void)
 
 void EnemyMove::ExRate(void)
 {
-	_pos = _endPos - (_lenght * (static_cast<double>(((100 + (((count / 2) % 60) - (((count / 2) % 30 * 2) * (((count / 2) / 30) % 2))))) / 100.0)));
+	_pos = _endPos - (_lad * (static_cast<double>(((100 + (count % 60) - ((count % 30 * 2) * ((count / 30) % 2)))) / 100.0)));
 	count++;
 	if (_exFlag)
 	{

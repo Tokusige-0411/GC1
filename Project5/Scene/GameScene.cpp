@@ -1,3 +1,4 @@
+#include <time.h>
 #include <algorithm>
 #include <DxLib.h>
 #include <_DebugConout.h>
@@ -21,6 +22,8 @@ vector2Int firstPos[6] = {
 
 GameScene::GameScene()
 {
+	srand((unsigned)time(NULL));
+
 	initFunc();
 
 	lpImageMng.GetID("·¬×", "image/char.png", { 30, 32 }, { 10, 10 });
@@ -53,7 +56,7 @@ GameScene::GameScene()
 			tmpMoveState.emplace_back(MOVE_TYPE::LR, vector2Dbl{ static_cast<double>(35 * 3 + 32 * x), static_cast<double>(35 + y * 40) });
 			tmpMoveState.emplace_back(MOVE_TYPE::EXRATE, vector2Dbl{ static_cast<double>(((35 * 3 + 32 * 0) + (35 * 3 + 32 * 9)) / 2),  static_cast<double>(((35 + 0 * 40) + (35 + 4 * 40)) / 2) });
 			tmpMoveState.emplace_back(MOVE_TYPE::ATTACK, vector2Dbl{ 180.0, 0.0 });
-			tmpMoveState.emplace_back(MOVE_TYPE::PITIN, vector2Dbl{ static_cast<double>(35 * 3 + 32 * x), static_cast<double>(35 + y * 40) });
+			tmpMoveState.emplace_back(MOVE_TYPE::PITIN, vector2Dbl{ static_cast<double>(((35 * 3 + 32 * 0) + (35 * 3 + 32 * 9)) / 2),  static_cast<double>(((35 + 0 * 40) + (35 + 4 * 40)) / 2) });
 
 			EnemyState enState = {
 				ENEMY_TYPE::A,

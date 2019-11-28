@@ -49,13 +49,14 @@ private:
 	double _sigCount;			// ｼｸﾞﾓｲﾄﾞ関数のｶｳﾝﾄ
 	double _spaiRad;			// 回転で使う中心からの半径
 	double _spaiAngl;			// 回転で使う中心の角度
-	double _LRSpeed;			// LRでの移動量
+	int _rotaCnt;				// 拡大縮小が始まった時のｶｳﾝﾄ保存
 
 	static int _pitInCnt;		// ﾋﾟｯﾄｲﾝしたものをｶｳﾝﾄする
 	static int _maxCount;		// 敵の最大数を数える
 
 	vector2Dbl _oneMoveVec;		// 1ﾌﾚｰﾑ当たりの移動量
 	vector2Dbl _lenght;			// _endPosと_posの距離
+	vector2Dbl _lad;			// 拡大縮小で使う中心からの距離
 
 	vector2Dbl _plPos;			// ﾌﾟﾚｲﾔｰの座標
 	bool& _exFlag;				// ｱﾀｯｸに移行していいかどうか
