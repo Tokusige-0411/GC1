@@ -65,6 +65,17 @@ bool Obj::SetAlive(bool alive)
 	return true;
 }
 
+bool Obj::exFlag(void)
+{
+	return _exFlag;
+}
+
+bool Obj::SetExFlag(bool exFlag)
+{
+	_exFlag = exFlag;
+	return true;
+}
+
 bool Obj::isAnimEnd(void)
 {
 	// ŠY“–‚·‚é·°‚ª‚ ‚é‚©‚Ç‚¤‚©

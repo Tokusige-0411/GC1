@@ -37,21 +37,21 @@ GameScene::GameScene()
 		for (int x = 0; x < 10; x++)
 		{
 			MoveState tmpMoveState;
-			tmpMoveState.emplace_back(MOVE_TYPE::WAIT, vector2Dbl{ 30.0 * (y * 10 + x) , 0.0 });
-			//tmpMoveState.emplace_back(MOVE_TYPE::WAIT, vector2Dbl{ 0.0 , 0.0 });
-			tmpMoveState.emplace_back(
-				MOVE_TYPE::SIGMOID,
-				vector2Dbl{ (lpSceneMng.GameScreenSize.x / 2) - ((static_cast<double>(lpSceneMng.GameScreenSize.x) * 1 / 5) * (((y * 10 + x) % 2) * 2 - 1)) ,
-			   (static_cast<double>(lpSceneMng.GameScreenSize.y) * 5 / 7) + ((static_cast<double>(lpSceneMng.GameScreenSize.y) * 1 / 7) * (((y * 10 + x) % 6 / 4) * -2 + 1)) }
-			);
-			tmpMoveState.emplace_back(
-				MOVE_TYPE::SPIRAL,
-				vector2Dbl{ (lpSceneMng.GameScreenSize.x / 2) - ((static_cast<double>(lpSceneMng.GameScreenSize.x) * 1 / 5) * (((y * 10 + x) % 2) * 2 - 1)) ,
-				static_cast<double>(lpSceneMng.GameScreenSize.y) * 5 / 7 }
-			);
+			//tmpMoveState.emplace_back(MOVE_TYPE::WAIT, vector2Dbl{ 30.0 * (y * 10 + x) , 0.0 });
+			tmpMoveState.emplace_back(MOVE_TYPE::WAIT, vector2Dbl{ 0.0 , 0.0 });
+			//tmpMoveState.emplace_back(
+			//	MOVE_TYPE::SIGMOID,
+			//	vector2Dbl{ (lpSceneMng.GameScreenSize.x / 2) - ((static_cast<double>(lpSceneMng.GameScreenSize.x) * 1 / 5) * (((y * 10 + x) % 2) * 2 - 1)) ,
+			//   (static_cast<double>(lpSceneMng.GameScreenSize.y) * 5 / 7) + ((static_cast<double>(lpSceneMng.GameScreenSize.y) * 1 / 7) * (((y * 10 + x) % 6 / 4) * -2 + 1)) }
+			//);
+			//tmpMoveState.emplace_back(
+			//	MOVE_TYPE::SPIRAL,
+			//	vector2Dbl{ (lpSceneMng.GameScreenSize.x / 2) - ((static_cast<double>(lpSceneMng.GameScreenSize.x) * 1 / 5) * (((y * 10 + x) % 2) * 2 - 1)) ,
+			//	static_cast<double>(lpSceneMng.GameScreenSize.y) * 5 / 7 }
+			//);
 			tmpMoveState.emplace_back(MOVE_TYPE::PITIN, vector2Dbl{ static_cast<double>(35 * 3 + 32 * x), static_cast<double>(35 + y * 40) });
 			tmpMoveState.emplace_back(MOVE_TYPE::LR, vector2Dbl{ static_cast<double>(35 * 3 + 32 * x), static_cast<double>(35 + y * 40) });
-			tmpMoveState.emplace_back(MOVE_TYPE::EXRATE, vector2Dbl{ static_cast<double>(((35 * 3 + 32 * 0) + (35 * 3 + 32 * 9))) / 2,  static_cast<double>(((35 + 0 * 40) + (35 + 4 * 40)) / 2) });
+			tmpMoveState.emplace_back(MOVE_TYPE::EXRATE, vector2Dbl{ static_cast<double>(((35 * 3 + 32 * 0) + (35 * 3 + 32 * 9)) / 2),  static_cast<double>(((35 + 0 * 40) + (35 + 4 * 40)) / 2) });
 			tmpMoveState.emplace_back(MOVE_TYPE::ATTACK, vector2Dbl{ 180.0, 0.0 });
 			tmpMoveState.emplace_back(MOVE_TYPE::PITIN, vector2Dbl{ static_cast<double>(35 * 3 + 32 * x), static_cast<double>(35 + y * 40) });
 
@@ -85,11 +85,30 @@ GameScene::~GameScene()
 // ï`âÊèÓïÒÇÃ±ØÃﬂ√ﬁ∞ƒ
 unique_Base GameScene::Update(unique_Base own)
 {
-	auto Obj = std::find_if(_objList.begin(), _objList.end(), [](sharedObj Obj) {return ((*Obj).unitID() == UNIT_ID::PLAYER); });
+	// Ãﬂ⁄≤‘∞ÇÃç¿ïWÇå©Ç¬ÇØÇÈ
+	auto plObj = std::find_if(_objList.begin(), _objList.end(), [](sharedObj Obj) {return ((*Obj).unitID() == UNIT_ID::PLAYER); });
+
+	// ìGÇ…attackÇ…à⁄çsÇµÇƒÇ¢Ç¢Ç©éxéùÇ∑ÇÈ
+	auto setMove = [](sharedObj Obj) {
+		if ((*Obj).unitID() == UNIT_ID::ENEMY)
+		{
+			if (rand() % 3000 == 0 && !(*Obj).exFlag())
+			{
+				return true;
+			}
+		}
+		return false;
+	};
+
 	for (auto data : _objList)
 	{
-		(*data).Update(*Obj);
+		if (setMove(data))
+		{
+			(*data).SetExFlag(true);
+		}
+		(*data).Update(*plObj);
 	}
+
 	// ObjÇÃDrawÇ…±∏æΩÇµÇƒï`âÊÇÃ∑≠∞ÇçXêVÇ∑ÇÈ
 	for (auto data : _objList)
 	{

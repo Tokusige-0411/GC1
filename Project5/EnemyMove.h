@@ -20,7 +20,7 @@ using MoveState = std::vector<std::pair<MOVE_TYPE, vector2Dbl>>;
 class EnemyMove
 {
 public:
-	EnemyMove(vector2Dbl& pos, double & rad);								// 座標を入れる
+	EnemyMove(vector2Dbl& pos, double & rad, bool & exFlag);								// 座標を入れる
 	~EnemyMove();
 	void Update(sharedObj Obj);												// いろいろ更新
 	bool SetMoveState(MoveState& state, bool newFlag);						// 関数ﾎﾟｲﾝﾀに設定する
@@ -58,5 +58,6 @@ private:
 	vector2Dbl _lenght;			// _endPosと_posの距離
 
 	vector2Dbl _plPos;			// ﾌﾟﾚｲﾔｰの座標
+	bool& _exFlag;				// ｱﾀｯｸに移行していいかどうか
 };
 

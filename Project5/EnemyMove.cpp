@@ -12,7 +12,7 @@
 int EnemyMove::_pitInCnt = 0;
 int EnemyMove::_maxCount = MAX_COUNT;
 
-EnemyMove::EnemyMove(vector2Dbl& pos, double & rad) : _pos(pos), _rad(rad)
+EnemyMove::EnemyMove(vector2Dbl& pos, double & rad, bool & exFlag) : _pos(pos), _rad(rad), _exFlag(exFlag)
 {
 	_move = nullptr;
 	_aimCnt = -1;
@@ -107,7 +107,7 @@ void EnemyMove::SetMovePrg(void)
 		{
 			_endPos.x += (((lpSceneMng.gameCount + 90) % 180 - 45) - (((lpSceneMng.gameCount + 90) % 90 * 2) * ((lpSceneMng.gameCount + 90) / 90 % 2)));
 		}
-		_lenght = _endPos - _startPos;			// ˆÚ“®ŽžŠÔ‚ª120ÌÚ°Ñ‚É‚È‚é‚æ‚¤‚É
+		_lenght = _endPos - _startPos;						// ˆÚ“®ŽžŠÔ‚ª120ÌÚ°Ñ‚É‚È‚é‚æ‚¤‚É
 		count = 0;
 		break;
 	case MOVE_TYPE::LR:
@@ -251,9 +251,10 @@ void EnemyMove::ExRate(void)
 {
 	_pos = _endPos - (_lenght * (static_cast<double>(((100 + (((count / 2) % 60) - (((count / 2) % 30 * 2) * (((count / 2) / 30) % 2))))) / 100.0)));
 	count++;
-	if (count >= 240)
+	if (_exFlag)
 	{
 		SetMovePrg();
+		_exFlag = false;
 	}
 }
 

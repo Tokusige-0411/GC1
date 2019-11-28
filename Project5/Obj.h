@@ -43,10 +43,13 @@ public:
 	const STATE state(void)const;		// get
 
 	bool SetAnim(const STATE state, AnimVector& data);		// ｱﾆﾒｷｰを設定する
-	bool SetAlive(bool alive);								// ステータスを変更する
+	bool SetAlive(bool alive);								// ｽﾃｰﾀｽを変更する
+	bool exFlag(void);									// exFlagを見る
+	bool SetExFlag(bool exFlag);									// exFlagを設定する
+
 	bool isAlive(void) { return _alive; }					// 生存ﾌﾗｸﾞを返す
 	bool isDead(void) { return _dead; }						// 死亡ﾌﾗｸﾞを返す
-	bool isAnimEnd(void);
+	bool isAnimEnd(void);									// ｱﾆﾒｰｼｮﾝが終わったかどうか
 
 	// 参照させたいpos state sizeのgetをつくる
 	const vector2Dbl& pos(void) const;
@@ -68,5 +71,6 @@ protected:
 	vector2Dbl _size;				// 描画のｻｲｽﾞ
 	double _rad;					// 角度
 	int _zOrder;					// どの順番で描画するか
+	bool _exFlag;					// EXﾓｰﾄﾞ(敵が拡大縮小か見てAttackに移るかどうか)
 };
 

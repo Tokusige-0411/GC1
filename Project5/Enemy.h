@@ -34,7 +34,7 @@ public:
 	void Update(sharedObj Obj) override;
 	~Enemy();
 private:
-	EnemyMove _moveCtl{ _pos, _rad };
+	EnemyMove _moveCtl{ _pos, _rad, _exFlag};
 	void init(void);		// ‰Šú‰»
 	ENEMY_TYPE _type;		// “G‚Ìí—Ş
 };
