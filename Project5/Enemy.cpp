@@ -1,6 +1,7 @@
 #include <imageMng.h>
 #include <Scene\GameScene.h>
 #include "Enemy.h"
+#include "EnemyMove.h"
 
 Enemy::Enemy()
 {
@@ -25,11 +26,21 @@ void Enemy::Update(sharedObj Obj)
 	}
 
 	_moveCtl.Update(Obj);
+}
 
-	//if (rand() % 300 == 0)
-	//{
-	//	SetAlive(false);
-	//}
+bool Enemy::exFlag(void)
+{
+	return _exFlag;
+}
+
+bool Enemy::SetExFlag(bool exFlag)
+{
+	if (_moveCtl.GetMoveState().first == MOVE_TYPE::EXRATE)
+	{
+		_exFlag = exFlag;
+	}
+
+	return true;
 }
 
 

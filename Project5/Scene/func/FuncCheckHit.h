@@ -3,6 +3,6 @@
 
 struct FuncCheckHit
 {
-	bool operator()(ActQueT actData, std::vector<sharedObj>& _objList);
+	bool operator()(ActQueT actData, std::vector<sharedObj>& _objList);			// “–‚½‚è”»’è
 };
 

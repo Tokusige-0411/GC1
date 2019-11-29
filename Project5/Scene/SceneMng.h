@@ -63,27 +63,27 @@ public:
 	// std::pair<int, double> data1
 	// std::tuple<int, int, int> 
 
-	bool AddDrawQue(DrawQueT dQue);		// ·­°‚Ì’Ç‰Á
-	bool AddActQue(ActQueT aQue);
+	bool AddDrawQue(DrawQueT dQue);		// •`‰æ·­°‚Ì’Ç‰Á
+	bool AddActQue(ActQueT aQue);		// ±¸¼®İ·­°‚Ì’Ç‰Á
 
 	// -------------•Ï”
 	const vector2Int ScreenSize;		// ½¸Ø°İ»²½ŞX,Y
-	const vector2Int ScreenCenter;
-	const vector2Int GameScreenSize;
-	const vector2Int GameScreenOffset;
+	const vector2Int ScreenCenter;		// ‰æ–Ê‚Ì’†‰›
+	const vector2Int GameScreenSize;	// ¹Ş°Ñ½¸Ø°İ»²½ŞX,Y
+	const vector2Int GameScreenOffset;	// ¹Ş°Ñ½¸Ø°İ‚ÌµÌ¾¯Ä
 
 	int gameCount;						// ¹Ş°Ñ‘S‘Ì‚Ì¶³İÄ”
 
 private:
 	static SceneMng* sInstance;
-	unique_Base _activeScene;
+	unique_Base _activeScene;			// ‚Ç‚Ì¼°İ‚ğ‘–‚ç‚¹‚é‚©
 
 	void Draw(void);					// ‚·‚×‚Ä‚ğ•`‰æ‚·‚é
 
 	std::map<LAYER, int > _screenID;	// •`‰æ‚·‚é‰æ–Ê‚ğw’è‚·‚é
 
-	std::vector<DrawQueT> _drawList;	// ·­°‚Ì’Ç‰Á
-	std::vector<ActQueT> _actList;
+	std::vector<DrawQueT> _drawList;	// •`‰æ·­°‚ğŠÇ—‚·‚é”z—ñ
+	std::vector<ActQueT> _actList;		// ±¸¼®İ·­°‚ğŠÇ—‚·‚é”z—ñ
 
 	SceneMng();
 	~SceneMng();

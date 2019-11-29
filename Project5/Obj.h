@@ -44,17 +44,17 @@ public:
 
 	bool SetAnim(const STATE state, AnimVector& data);		// ｱﾆﾒｷｰを設定する
 	bool SetAlive(bool alive);								// ｽﾃｰﾀｽを変更する
-	bool exFlag(void);									// exFlagを見る
-	bool SetExFlag(bool exFlag);									// exFlagを設定する
+	virtual bool exFlag(void);								// exFlagを見る
+	virtual bool SetExFlag(bool exFlag);					// exFlagを設定する
 
 	bool isAlive(void) { return _alive; }					// 生存ﾌﾗｸﾞを返す
 	bool isDead(void) { return _dead; }						// 死亡ﾌﾗｸﾞを返す
 	bool isAnimEnd(void);									// ｱﾆﾒｰｼｮﾝが終わったかどうか
 
 	// 参照させたいpos state sizeのgetをつくる
-	const vector2Dbl& pos(void) const;
-	const vector2Dbl& size(void) const;
-	const UNIT_ID& unitID(void) const;
+	const vector2Dbl& pos(void) const;						// posのget関数
+	const vector2Dbl& size(void) const;						// sizeのget関数
+	const UNIT_ID& unitID(void) const;						// unitIDのget関数
 
 private:
 	std::map<STATE, AnimVector> _animMap;			// ｱﾆﾒｰｼｮﾝ情報を保存するﾏｯﾌﾟ
@@ -64,7 +64,7 @@ private:
 
 protected:
 	bool DestroyPrpc(void);			// 当たり判定などに使う
-	UNIT_ID _unitID;
+	UNIT_ID _unitID;				// ﾕﾆｯﾄ管理
 	bool _alive;					// 生存ﾌﾗｸﾞ
 	bool _dead;						// 死亡ﾌﾗｸﾞ
 	vector2Dbl _pos;				// 描画位置

@@ -18,6 +18,7 @@ EnemyMove::EnemyMove(vector2Dbl& pos, double & rad, bool & exFlag) : _pos(pos), 
 	_aimCnt = -1;
 	_sigCount = -5.0;
 	_spaiAngl = 90.0;
+	_rateCnt = 0;
 }
 
 EnemyMove::~EnemyMove()
@@ -101,16 +102,18 @@ void EnemyMove::SetMovePrg(void)
 		{
 			_pos.y = -100.0;
 			_startPos = _pos;								// åªç›ÇÃç¿ïWÇì¸ÇÍÇÈ
-			_endPos -= (_lad * 
-				(static_cast<double>((100 + (((lpSceneMng.gameCount - _rotaCnt + 90) % 60) - 
-				(((lpSceneMng.gameCount - _rotaCnt + 90) % 30 * 2) *
-				(((lpSceneMng.gameCount - _rotaCnt + 90) / 30) % 2)))) / 100.0)));
+			_exLad = _center - _endPos;
+			_endPos = _center - _exLad *
+						(static_cast<double>((100 + ((lpSceneMng.gameCount - _rateCnt + 90) % 60) -
+						(((lpSceneMng.gameCount - _rateCnt + 90) % 30 * 2) *
+						(((lpSceneMng.gameCount - _rateCnt + 90) / 30) % 2)))) / 100.0);
+
 		}
 		else
 		{
 			_endPos.x += (((lpSceneMng.gameCount + 90) % 180 - 45) - (((lpSceneMng.gameCount + 90) % 90 * 2) * ((lpSceneMng.gameCount + 90) / 90 % 2)));
 		}
-		_lenght = _endPos - _startPos;						// à⁄ìÆéûä‘Ç™120Ã⁄∞—Ç…Ç»ÇÈÇÊÇ§Ç…
+		_lenght = _endPos - _startPos;						// à⁄ìÆãóó£Çì¸ÇÍÇÈ
 		count = 0;
 		break;
 	case MOVE_TYPE::LR:
@@ -120,8 +123,12 @@ void EnemyMove::SetMovePrg(void)
 		break;
 	case MOVE_TYPE::EXRATE:
 		_move = &EnemyMove::ExRate;
-		_lad = _endPos - _pos;
-		_rotaCnt = lpSceneMng.gameCount;
+		if (_rateCnt == 0)
+		{
+			_center = _endPos;
+			_exLad = _center - _startPos;
+			_rateCnt = lpSceneMng.gameCount;
+		}
 		break;
 	case MOVE_TYPE::ATTACK:
 		_move = &EnemyMove::Attack;
@@ -252,8 +259,12 @@ void EnemyMove::MoveLR(void)
 
 void EnemyMove::ExRate(void)
 {
-	_pos = _endPos - (_lad * (static_cast<double>(((100 + (count % 60) - ((count % 30 * 2) * ((count / 30) % 2)))) / 100.0)));
-	count++;
+	// _rotaCntÇégÇ¡Çƒ
+	_pos = _endPos - 
+		(_exLad * 
+		(static_cast<double>(((100 + ((lpSceneMng.gameCount - _rateCnt) % 60) - 
+			(((lpSceneMng.gameCount - _rateCnt) % 30 * 2) * 
+			(((lpSceneMng.gameCount - _rateCnt) / 30) % 2))))) / 100.0));
 	if (_exFlag)
 	{
 		SetMovePrg();
@@ -289,4 +300,9 @@ void EnemyMove::SetMaxCount(void)
 		_maxCount--;
 		_pitInCnt--;
 	}
+}
+
+std::pair<MOVE_TYPE, vector2Dbl> EnemyMove::GetMoveState(void)
+{
+	return _aimState[_aimCnt];
 }

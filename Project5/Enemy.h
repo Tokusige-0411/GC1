@@ -31,10 +31,13 @@ class Enemy :
 public:
 	Enemy();
 	Enemy(EnemyState&);
-	void Update(sharedObj Obj) override;
+	void Update(sharedObj Obj) override;		// ˆ—
+	bool exFlag(void);							// exFlag‚ÌgetŠÖ”
+	bool SetExFlag(bool exFlag);				// setŠÖ”
+
 	~Enemy();
 private:
-	EnemyMove _moveCtl{ _pos, _rad, _exFlag};
+	EnemyMove _moveCtl{ _pos, _rad, _exFlag};	// EnemyMove‚ÖˆÚs
 	void init(void);		// ‰Šú‰»
 	ENEMY_TYPE _type;		// “G‚Ìí—Ş
 };

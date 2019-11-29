@@ -24,7 +24,8 @@ public:
 	~EnemyMove();
 	void Update(sharedObj Obj);												// いろいろ更新
 	bool SetMoveState(MoveState& state, bool newFlag);						// 関数ﾎﾟｲﾝﾀに設定する
-	void SetMaxCount(void);				// 敵の最大数をｶｳﾝﾄするだけ
+	void SetMaxCount(void);													// 敵の最大数をｶｳﾝﾄするだけ
+	std::pair<MOVE_TYPE, vector2Dbl> GetMoveState(void);
 
 private:
 	void SetMovePrg(void);				// 動きの関数を設定する
@@ -49,14 +50,15 @@ private:
 	double _sigCount;			// ｼｸﾞﾓｲﾄﾞ関数のｶｳﾝﾄ
 	double _spaiRad;			// 回転で使う中心からの半径
 	double _spaiAngl;			// 回転で使う中心の角度
-	int _rotaCnt;				// 拡大縮小が始まった時のｶｳﾝﾄ保存
+	int _rateCnt;				// 拡大縮小が始まった時のｶｳﾝﾄ保存
+	vector2Dbl _center;			// 拡大縮小の中心座標
 
 	static int _pitInCnt;		// ﾋﾟｯﾄｲﾝしたものをｶｳﾝﾄする
 	static int _maxCount;		// 敵の最大数を数える
 
 	vector2Dbl _oneMoveVec;		// 1ﾌﾚｰﾑ当たりの移動量
 	vector2Dbl _lenght;			// _endPosと_posの距離
-	vector2Dbl _lad;			// 拡大縮小で使う中心からの距離
+	vector2Dbl _exLad;			// 拡大縮小で使う中心からの距離
 
 	vector2Dbl _plPos;			// ﾌﾟﾚｲﾔｰの座標
 	bool& _exFlag;				// ｱﾀｯｸに移行していいかどうか
