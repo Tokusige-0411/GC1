@@ -276,7 +276,7 @@ void EnemyMove::Attack(void)
 {
 	if (count < _endPos.x)
 	{
-
+		_rad++;
 	}
 	else
 	{
