@@ -104,9 +104,9 @@ void EnemyMove::SetMovePrg(void)
 			_startPos = _pos;								// åªç›ÇÃç¿ïWÇì¸ÇÍÇÈ
 			_exLad = _center - _endPos;
 			_endPos = _center - _exLad *
-						(static_cast<double>((100 + ((lpSceneMng.gameCount - _rateCnt + 90) % 60) -
-						(((lpSceneMng.gameCount - _rateCnt + 90) % 30 * 2) *
-						(((lpSceneMng.gameCount - _rateCnt + 90) / 30) % 2)))) / 100.0);
+						(static_cast<double>((100 + ((lpSceneMng.gameCount - _rateCnt + 90) / 2 % 60) -
+						(((lpSceneMng.gameCount - _rateCnt + 90) / 2 % 30 * 2) *
+						(((lpSceneMng.gameCount - _rateCnt + 90) / 2 / 30) % 2)))) / 100.0);
 
 		}
 		else
@@ -262,9 +262,9 @@ void EnemyMove::ExRate(void)
 	// _rotaCntÇégÇ¡Çƒ
 	_pos = _endPos - 
 		(_exLad * 
-		(static_cast<double>(((100 + ((lpSceneMng.gameCount - _rateCnt) % 60) - 
-			(((lpSceneMng.gameCount - _rateCnt) % 30 * 2) * 
-			(((lpSceneMng.gameCount - _rateCnt) / 30) % 2))))) / 100.0));
+		(static_cast<double>(((100 + ((lpSceneMng.gameCount - _rateCnt) / 2 % 60) - 
+			(((lpSceneMng.gameCount - _rateCnt) / 2 % 30 * 2) * 
+			(((lpSceneMng.gameCount - _rateCnt) / 2 / 30) % 2))))) / 100.0));
 	if (_exFlag)
 	{
 		SetMovePrg();
