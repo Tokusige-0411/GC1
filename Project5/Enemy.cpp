@@ -1,5 +1,6 @@
 #include <imageMng.h>
 #include <Scene\GameScene.h>
+#include <SceneMng.h>
 #include "Enemy.h"
 #include "EnemyMove.h"
 
@@ -47,6 +48,16 @@ bool Enemy::SetExFlag(bool exFlag)
 Enemy::~Enemy()
 {
 	_moveCtl.SetMaxCount();
+}
+
+bool Enemy::SetAlive(bool alive)
+{
+	if (!alive)
+	{
+		// ‰æ–Ê—h‚ç‚µ‚Ì·­°‚ð’Ç‰Á
+		lpSceneMng.AddActQue({ ACT_QUE::SHAKE, *this });
+	}
+	return 	Obj::SetAlive(alive);
 }
 
 void Enemy::init(void)

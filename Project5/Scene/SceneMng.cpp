@@ -45,10 +45,10 @@ void SceneMng::Draw(void)
 	//‘S‚Ä‚ÌÃŞ°À‚ğ‘‚«I‚¦‚½‚çSCREEN_BACK‚É•`‰æ
 	SetDrawScreen(DX_SCREEN_BACK);
 	ClsDrawScreen();
-	for (auto layer : LAYER())
-	{
-		DrawRotaGraph(ScreenCenter.x, ScreenCenter.y, 1.0, 0.0, _screenID[layer], true);
-	}
+	auto layPos = ScreenCenter + (*_activeScene)._screenPos;
+	DrawRotaGraph(layPos.x, layPos.y, 1.0, 0.0, _screenID[LAYER::BG], true);
+	DrawRotaGraph(layPos.x, layPos.y, 1.0, 0.0, _screenID[LAYER::CHAR], true);
+	DrawRotaGraph(layPos.x, layPos.y, 1.0, 0.0, _screenID[LAYER::UI], true);
 	ScreenFlip();
 
 	// ²ÃÚ°À°‚ğg‚Á‚½for•¶

@@ -1,11 +1,12 @@
 #include <cmath>
 #include "FuncCheckHit.h"
 #include <EnemyMove.h>
+#include <GameScene.h>
 
-bool FuncCheckHit::operator()(ActQueT actData, std::vector<sharedObj>& _objList)
+bool FuncCheckHit::operator()(ActQueT actData, void* scene)
 {
 	UNIT_ID unitID = (actData.second.unitID() == UNIT_ID::PL_BULLET ? UNIT_ID::ENEMY : UNIT_ID::PLAYER);
-	for (auto data : _objList)
+	for (auto data : ((GameScene*)scene)->_objList)
 	{
 		if (unitID == (*data).unitID() && (*data).isAlive())
 		{

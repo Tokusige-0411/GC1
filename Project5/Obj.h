@@ -43,7 +43,7 @@ public:
 	const STATE state(void)const;		// get
 
 	bool SetAnim(const STATE state, AnimVector& data);		// ±ÆÒ·°‚ğİ’è‚·‚é
-	bool SetAlive(bool alive);								// ½Ã°À½‚ğ•ÏX‚·‚é
+	virtual bool SetAlive(bool alive);						// ½Ã°À½‚ğ•ÏX‚·‚é
 	virtual bool exFlag(void);								// exFlag‚ğŒ©‚é
 	virtual bool SetExFlag(bool exFlag);					// exFlag‚ğİ’è‚·‚é
 

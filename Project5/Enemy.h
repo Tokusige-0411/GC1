@@ -37,6 +37,8 @@ public:
 
 	~Enemy();
 private:
+	bool SetAlive(bool alive) override;
+
 	EnemyMove _moveCtl{ _pos, _rad, _exFlag};	// EnemyMove‚ÖˆÚs
 	void init(void);		// ‰Šú‰»
 	ENEMY_TYPE _type;		// “G‚Ìí—Ş

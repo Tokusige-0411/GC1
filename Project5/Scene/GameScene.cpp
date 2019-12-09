@@ -10,6 +10,7 @@
 #include "SceneMng.h"
 #include <func\FuncBullet.h>
 #include <func\FuncCheckHit.h>
+#include <func\FuncShake.h>
 
 vector2Int firstPos[6] = {
 	{ -15, 15 },
@@ -78,6 +79,8 @@ GameScene::GameScene()
 	//	tmpMoveState,
 	//};
 	//_objList.emplace_back(new Enemy(enState));
+
+	_shakeCount = 0;
 }
 
 GameScene::~GameScene()
@@ -133,6 +136,16 @@ unique_Base GameScene::Update(unique_Base own)
 							),
 								_objList.end());
 
+	if (_shakeCount)
+	{
+		_screenPos = { rand() % 20 - 10, rand() % 20 - 10 };
+		_shakeCount--;
+		if (!_shakeCount)
+		{
+			_screenPos = { 0, 0 };
+		}
+	}
+
 	return std::move(own);
 	//obj->Draw();
 	//for (int i = 0; i < obj.size(); i++)
@@ -145,6 +158,7 @@ void GameScene::initFunc(void)
 {
 	funcQue[ACT_QUE::SHOT] = FuncBullet();
 	funcQue[ACT_QUE::CHECK_HIT] = FuncCheckHit();
+	funcQue[ACT_QUE::SHAKE] = FuncShake();
 }
 
 void GameScene::RunActQue(std::vector<ActQueT> actList)
@@ -153,7 +167,7 @@ void GameScene::RunActQue(std::vector<ActQueT> actList)
 	{
 		try
 		{
-			funcQue[actData.first](actData, _objList);
+			funcQue[actData.first](actData, this);
 		}
 		catch(...)
 		{
