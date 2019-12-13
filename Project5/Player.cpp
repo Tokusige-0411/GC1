@@ -42,8 +42,8 @@ void Player::Update(sharedObj Obj)
 
 	move(_input, INPUT_ID::LEFT,	_pos.x,		-2);
 	move(_input, INPUT_ID::RIGHT,	_pos.x,		 2);
-	move(_input, INPUT_ID::UP,		_pos.y,		-2);
-	move(_input, INPUT_ID::DOWN,	_pos.y,		 2);
+	//move(_input, INPUT_ID::UP,		_pos.y,		-2);
+	//move(_input, INPUT_ID::DOWN,	_pos.y,		 2);
 
 	if ((*_input).state(INPUT_ID::BTN_1).first && !((*_input).state(INPUT_ID::BTN_1).second))
 	{
