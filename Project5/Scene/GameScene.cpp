@@ -33,7 +33,7 @@ GameScene::GameScene()
 	lpImageMng.GetID("PL”š”­", "image/pl_blast.png", { 64,64 }, { 4,1 });
 
 	_objList.emplace_back(
-		new Player({ static_cast<double>(lpSceneMng.GameScreenSize.x / 2), static_cast<double>(lpSceneMng.GameScreenSize.y - 16) }, { 0, 0 })
+		new Player({ static_cast<double>(lpSceneMng.GameScreenSize.x / 2), static_cast<double>(lpSceneMng.GameScreenSize.y - 16) }, { 30, 32 })
 	);
 
 	for (int y = 0; y < 5; y++)
@@ -105,13 +105,16 @@ unique_Base GameScene::Update(unique_Base own)
 		return false;
 	};
 
-	for (auto data : _objList)
+	if (!FadeUpdate())
 	{
-		if (setMove(data))
+		for (auto data : _objList)
 		{
-			(*data).SetExFlag(true);
+			if (setMove(data))
+			{
+				(*data).SetExFlag(true);
+			}
+			(*data).Update(*plObj);
 		}
-		(*data).Update(*plObj);
 	}
 
 	// Obj‚ÌDraw‚É±¸¾½‚µ‚Ä•`‰æ‚Ì·­°‚ðXV‚·‚é

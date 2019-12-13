@@ -26,5 +26,14 @@ public:
 	virtual ~BaseScene();
 	virtual unique_Base Update(unique_Base own) = 0;
 	vector2Int _screenPos;										// •`‰æ‚Å¼ª²¸‚·‚é
+
+protected:
+	void FadeInit(std::string fadeType);
+	bool FadeUpdate(void);
+
+private:
+	int _fadeScrID;
+	int _fadeCount;
+	std::string _fadeType;
 };
 

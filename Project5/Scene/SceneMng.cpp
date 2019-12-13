@@ -21,6 +21,19 @@ void SceneMng::Draw(void)
 			< std::tie(std::get<static_cast<int>(DRAW_QUE::LAYER)>(y), std::get<static_cast<int>(DRAW_QUE::ZORDER)>(y));
 	});
 
+	SetDrawScreen(DX_SCREEN_BACK);
+	ClsDrawScreen();
+
+	// Ú²Ô°‚âÓ°ÄŞ‚Ì‰Šú’l‚ğİ’è
+	LAYER drawLayer = begin(LAYER());
+	int blendMode = DX_BLENDMODE_NOBLEND;
+	int blendModeNum = 255;
+
+	// •`‰ææ‚ğİ’è
+	SetDrawScreen(_layerGID);
+	ClsDrawScreen();
+	SetDrawBlendMode(blendMode, blendModeNum);
+
 	// ½À¯¸‚É‚½‚Ü‚Á‚Ä‚¢‚éQue‚ğ•`‰æ‚·‚é
 	// ”ÍˆÍfor•¶
 	for (auto dQue : _drawList)
@@ -29,26 +42,37 @@ void SceneMng::Draw(void)
 		int id;
 		LAYER layer;
 
+		// 1ŒÂ‘O‚Ìî•ñ‚ğ•Û‘¶‚·‚é
+		int blendModeOld = blendMode;
+		int blendModeNumOld = blendModeNum;
+
 		// tuplu‚Ì“à—e‚ğƒoƒ‰ƒV‚Ä“ü‚ê‚ç‚ê‚é
-		std::tie(id, x, y, rad, std::ignore, layer) = dQue;
+		std::tie(id, x, y, rad, std::ignore, layer, blendMode, blendModeNum) = dQue;
 
 		// ¡‚ÌÚ²Ô°‚É‡‚í‚¹‚Ä•`‰ææ‚ğ•Ï‚¦‚é
-		if (_screenID[layer] != GetDrawScreen())
+		if ((layer != drawLayer) || (blendModeOld != blendMode) || (blendModeNum != blendModeNumOld))
 		{
-			SetDrawScreen(_screenID[layer]);
+			// layerGID‚É•`‚¢‚½“à—e‚ğÊŞ¯¸ÊŞ¯Ì§‚É•`‰æ‚·‚é
+			SetDrawScreen(DX_SCREEN_BACK);
+			SetDrawBlendMode(blendModeOld, blendModeNumOld);
+			auto layPos = ScreenCenter + (*_activeScene)._screenPos;
+			DrawRotaGraph(layPos.x, layPos.y, 1.0, 0.0, _layerGID, true);
+
+			// •`‰ææ‚ğ_layerGID‚Éİ’è
+			SetDrawScreen(_layerGID);
+			SetDrawBlendMode(blendMode, blendModeNum);
 			ClsDrawScreen();
 		}
 
 		DrawRotaGraph(static_cast<int>(x), static_cast<int>(y), 1.0, rad, id, true);
 	}
 
-	//‘S‚Ä‚ÌÃŞ°À‚ğ‘‚«I‚¦‚½‚çSCREEN_BACK‚É•`‰æ
 	SetDrawScreen(DX_SCREEN_BACK);
-	ClsDrawScreen();
-	auto layPos = ScreenCenter + (*_activeScene)._screenPos;
-	DrawRotaGraph(layPos.x, layPos.y, 1.0, 0.0, _screenID[LAYER::BG], true);
-	DrawRotaGraph(layPos.x, layPos.y, 1.0, 0.0, _screenID[LAYER::CHAR], true);
-	DrawRotaGraph(layPos.x, layPos.y, 1.0, 0.0, _screenID[LAYER::UI], true);
+	SetDrawBlendMode(blendMode, blendModeNum);
+
+	DrawRotaGraph(ScreenCenter.x, ScreenCenter.y, 1.0, 0, _layerGID, true);
+
+
 	ScreenFlip();
 
 	// ²ÃÚ°À°‚ğg‚Á‚½for•¶
@@ -88,12 +112,12 @@ SceneMng::~SceneMng()
 void SceneMng::Run(void)
 {
 	SysInit();
-	_activeScene = std::make_unique<GameScene>();
+	_activeScene = std::make_unique <TitleScene> ();
 	while (!ProcessMessage() && !CheckHitKey(KEY_INPUT_ESCAPE))
 	{
 		_dbgStartDraw();
 		_drawList.clear();
-		lpSceneMng.AddDrawQue({ IMAGE_ID("˜g")[0], ScreenSize.x / 2, ScreenSize.y / 2, 0.0, 0, LAYER::UI });
+		lpSceneMng.AddDrawQue({ IMAGE_ID("˜g")[0], ScreenSize.x / 2, ScreenSize.y / 2, 0.0, 0, LAYER::UI, DX_BLENDMODE_NOBLEND, 255});
 		// ÒÓØ°‚ğ’¼ÚŠÇ—‚·‚é‚×‚«‚Å‚Í‚È‚¢(get‚ğ‚ ‚Ü‚èg‚í‚È‚¢‚æ‚¤‚É)
 		// [(*_activeScene).] = [_activeScene->]
 		// Š—LŒ ‚ğ“n‚·(ºËß°‚ğì‚ç‚È‚¢)
@@ -139,16 +163,12 @@ bool SceneMng::SysInit(void)
 	SetDrawScreen(DX_SCREEN_BACK);						// •`‰ææ‚ğÊŞ¯¸ÊŞ¯Ì§‚Éİ’è
 
 	// ì‚Á‚Ä‚ ‚ê‚Îì‚ç‚È‚¢
-	for (auto layer : LAYER())
-	{
-		if (_screenID.find(layer) == _screenID.end())
-		{
-			_screenID[layer] = MakeScreen(ScreenSize.x, ScreenSize.y, true);
-		}
-	}
+	_layerGID = MakeScreen(ScreenSize.x, ScreenSize.y, true);
 
 	_dbgSetup(255);										// ÃŞÊŞ¯¸Ş—p¾¯Ä±¯Ìß
 	lpImageMng.GetID("˜g", "image/frame.png");			// ÌÚ°Ñ‰æ‘œ“o˜^
+	lpImageMng.GetID("Black", "image/black.png");
+	lpImageMng.GetID("White", "image/white.png");
 
 	return false;
 }

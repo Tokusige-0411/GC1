@@ -14,11 +14,13 @@ enum class DRAW_QUE
 	Y,
 	RAD,
 	ZORDER,		// ﾚｲﾔｰ内の描画順(数値が低いほうが奥)
-	LAYER		// IDの小さいものを奥に描画
+	LAYER,		// IDの小さいものを奥に描画
+	DRAW_MODE,
+	DRAW_NUM,
 };
 
-// 描画するのに必要な情報<ImageID, 座標X, 座標Y, 画像の回転角>
-using DrawQueT = std::tuple<int, double, double, double, int, LAYER>;
+// 描画するのに必要な情報<ImageID, 座標X, 座標Y, 画像の回転角, zOrder, Layer, 描画ﾓｰﾄﾞ, 描画で渡す値>
+using DrawQueT = std::tuple<int, double, double, double, int, LAYER, int, int>;
 
 // lp ﾛﾝｸﾞﾎﾟｲﾝﾀｰ
 #define lpSceneMng SceneMng::GetInstance()
@@ -80,7 +82,7 @@ private:
 
 	void Draw(void);					// すべてを描画する
 
-	std::map<LAYER, int > _screenID;	// 描画する画面を指定する
+	int _layerGID;
 
 	std::vector<DrawQueT> _drawList;	// 描画ｷｭｰを管理する配列
 	std::vector<ActQueT> _actList;		// ｱｸｼｮﾝｷｭｰを管理する配列

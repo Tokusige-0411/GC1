@@ -84,4 +84,21 @@ void Player::init(void)
 
 	// Ãﬂ⁄≤‘∞ÇÃèÓïÒÇNORMALÇ…ê›íË
 	state(STATE::NORMAL);
+
+	_glowID[0] = MakeScreen(static_cast<int>(_size.x * 2), static_cast<int>(_size.y * 2), false);
+	_glowID[1] = MakeScreen(static_cast<int>(_size.x * 2), static_cast<int>(_size.y * 2), false);
+}
+
+void Player::Draw(void)
+{
+	Obj::Draw();
+
+	SetDrawScreen(_glowID[0]);
+	ClsDrawScreen();
+	SetDrawBright(0, 200 + rand() % 55, 0);
+	DrawRotaGraph(static_cast<int>(_size.x), static_cast<int>(_size.y), 1.25, 0, _animMap[_state][_animFrame].first, true);
+	SetDrawBright(255, 255, 255);
+	GraphFilter(_glowID[0], DX_GRAPH_FILTER_GAUSS, 5, 500);
+	lpSceneMng.AddDrawQue({ _glowID[0], lpSceneMng.GameScreenOffset.x + _pos.x, lpSceneMng.GameScreenOffset.y + _pos.y,
+		_rad, _zOrder - 1, LAYER::CHAR, DX_BLENDMODE_ADD, 255 });
 }

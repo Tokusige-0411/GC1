@@ -14,5 +14,8 @@ public:
 private:
 	void init(void);								// ‰Šú‰»
 	std::shared_ptr<InputState> _input;				// InputState‚ğÕÆ°¸Îß²İÀ‚ÅéŒ¾
+	void Draw(void) override;
+
+	int _glowID[2];
 };
 

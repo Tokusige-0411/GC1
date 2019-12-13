@@ -35,7 +35,7 @@ public:
 	// -----------ŠÖ”
 	Obj();
 	virtual void Update(sharedObj Obj) = 0;
-	void Draw(void);							// ·­°‚ğ’Ç‰Á‚·‚é
+	virtual void Draw(void);					// ·­°‚ğ’Ç‰Á‚·‚é
 	void Draw(int id);							// ID‚ğ“Š‚°‚Ä·­°‚ğ’Ç‰Á
 	virtual ~Obj();
 
@@ -57,12 +57,13 @@ public:
 	const UNIT_ID& unitID(void) const;						// unitID‚ÌgetŠÖ”
 
 private:
-	std::map<STATE, AnimVector> _animMap;			// ±ÆÒ°¼®İî•ñ‚ğ•Û‘¶‚·‚éÏ¯Ìß
-	STATE _state;									// ¡‚Ìó‘Ô
-	unsigned int _animFrame;						// ·°‚Ì’†‚ÌÌÚ°Ñ”
 	unsigned int _animCount;						// ·°‚Ì’†‚Ìo‚¾‚µ‚©‚ç‰½‰ñÙ°Ìß‚µ‚Ä‚¢‚é‚©
 
 protected:
+	std::map<STATE, AnimVector> _animMap;			// ±ÆÒ°¼®İî•ñ‚ğ•Û‘¶‚·‚éÏ¯Ìß
+	STATE _state;									// ¡‚Ìó‘Ô
+	unsigned int _animFrame;						// ·°‚Ì’†‚ÌÌÚ°Ñ”
+
 	bool DestroyPrpc(void);			// “–‚½‚è”»’è‚È‚Ç‚Ég‚¤
 	UNIT_ID _unitID;				// ÕÆ¯ÄŠÇ—
 	bool _alive;					// ¶‘¶Ì×¸Ş
